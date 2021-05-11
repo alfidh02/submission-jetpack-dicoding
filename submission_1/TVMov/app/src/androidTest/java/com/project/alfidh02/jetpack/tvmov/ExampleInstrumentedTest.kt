@@ -1,4 +1,4 @@
-package com.project.bangkit.b21cap0475.tvmov
+package com.project.alfidh02.jetpack.tvmov
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

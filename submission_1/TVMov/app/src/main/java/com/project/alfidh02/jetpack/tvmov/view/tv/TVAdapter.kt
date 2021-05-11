@@ -1,4 +1,4 @@
-package com.project.alfidh02.jetpack.tvmov.view.movies
+package com.project.alfidh02.jetpack.tvmov.view.tv
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +9,7 @@ import com.project.alfidh02.jetpack.tvmov.R
 import com.project.alfidh02.jetpack.tvmov.databinding.ItemsMovieTvBinding
 import com.project.alfidh02.jetpack.tvmov.model.data.MovieTVEntity
 
-class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
+class TVAdapter : RecyclerView.Adapter<TVAdapter.MoviesViewHolder>() {
     private val listMovie = ArrayList<MovieTVEntity>()
 
     fun setMovie(movies: List<MovieTVEntity>?) {
@@ -26,7 +26,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
         return MoviesViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: MoviesAdapter.MoviesViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TVAdapter.MoviesViewHolder, position: Int) {
         val movie = listMovie[position]
         holder.bind(movie)
     }

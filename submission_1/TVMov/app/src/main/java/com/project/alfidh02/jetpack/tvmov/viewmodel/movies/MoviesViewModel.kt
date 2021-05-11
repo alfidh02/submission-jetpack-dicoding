@@ -1,4 +1,4 @@
-package com.project.alfidh02.jetpack.tvmov.view.movies
+package com.project.alfidh02.jetpack.tvmov.viewmodel.movies
 
 import androidx.lifecycle.ViewModel
 import com.project.alfidh02.jetpack.tvmov.model.data.MovieTVEntity

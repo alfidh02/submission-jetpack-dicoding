@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.alfidh02.jetpack.tvmov.databinding.FragmentMoviesBinding
+import com.project.alfidh02.jetpack.tvmov.viewmodel.movies.MoviesViewModel
 
 class MoviesFragment : Fragment() {
 

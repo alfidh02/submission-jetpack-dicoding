@@ -50,8 +50,8 @@ class DetailActivity : AppCompatActivity() {
             .into(detailContentBinding.ivPosterDetail)
 
         with(detailContentBinding) {
-            tvTitle.text = selectedMovieTv.title
-            tvGenre.text = selectedMovieTv.genre
+            tvTitleDetail.text = selectedMovieTv.title
+            tvGenreDetail.text = selectedMovieTv.genre
             tvReleaseDate.text = selectedMovieTv.date
             tvDesc.text = selectedMovieTv.desc
         }

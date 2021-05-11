@@ -1,5 +1,6 @@
 package com.project.alfidh02.jetpack.tvmov.view.movies
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,6 +9,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.project.alfidh02.jetpack.tvmov.R
 import com.project.alfidh02.jetpack.tvmov.databinding.ItemsMovieTvBinding
 import com.project.alfidh02.jetpack.tvmov.model.data.MovieTVEntity
+import com.project.alfidh02.jetpack.tvmov.view.detail.DetailActivity
 
 class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
     private val listMovie = ArrayList<MovieTVEntity>()
@@ -47,12 +49,12 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
                 tvDate.text = movie.date
                 tvGenre.text = movie.genre
 
-//                itemView.setOnClickListener {
-//                    Intent(itemView.context, DetailFilmActivity::class.java).also {
-//                        it.putExtra(DetailFilmActivity.EXTRAS_DETAIL, movie.title)
-//                        itemView.context.startActivity(it)
-//                    }
-//                }
+                itemView.setOnClickListener {
+                    Intent(itemView.context, DetailActivity::class.java).also {
+                        it.putExtra(DetailActivity.EXTRA_MOVIE_TV, movie.title)
+                        itemView.context.startActivity(it)
+                    }
+                }
             }
         }
     }

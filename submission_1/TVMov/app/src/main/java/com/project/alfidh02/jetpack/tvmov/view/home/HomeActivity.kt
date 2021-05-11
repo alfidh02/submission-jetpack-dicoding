@@ -1,11 +1,10 @@
 package com.project.alfidh02.jetpack.tvmov.view.home
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.project.alfidh02.jetpack.tvmov.R
+import androidx.appcompat.app.AppCompatActivity
 import com.project.alfidh02.jetpack.tvmov.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
 
     private lateinit var activityMainBinding: ActivityMainBinding
 

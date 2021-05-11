@@ -9,7 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TVMov">
-        <activity android:name=".view.splash.SplashScreen"
+        <activity android:name=".view.detail.DetailActivity"
+            android:label="@string/detail_title"
+            android:theme="@style/Theme.TVMov.NoActionBar"
+            android:parentActivityName=".view.home.HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.home.HomeActivity"/>
+        </activity>
+        <activity
+            android:name=".view.splash.SplashScreen"
             android:theme="@style/Theme.TVMov.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,7 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.home.MainActivity"></activity>
+        <activity android:name=".view.home.HomeActivity" />
     </application>
 
 </manifest>

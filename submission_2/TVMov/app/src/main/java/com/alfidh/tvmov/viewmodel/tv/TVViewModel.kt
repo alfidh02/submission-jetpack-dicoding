@@ -7,5 +7,5 @@ import com.alfidh.tvmov.model.data.entity.TVEntity
 import com.alfidh.tvmov.model.repository.TVMovieRepository
 
 class TVViewModel(private val tvMovieRepository: TVMovieRepository) : ViewModel() {
-//    fun getListTV(): LiveData<List<TVEntity>> = tvMovieRepository.loadMovies()
+    fun getListTV(): LiveData<List<TVEntity>> = tvMovieRepository.loadTVShow()
 }

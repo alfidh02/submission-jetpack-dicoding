@@ -3,6 +3,9 @@ package com.alfidh.tvmov.model.data.remote.source
 import com.alfidh.tvmov.model.data.remote.response.movie.MovieDetailResponse
 import com.alfidh.tvmov.model.data.remote.response.movie.MovieRemote
 import com.alfidh.tvmov.model.data.remote.response.movie.MovieResponse
+import com.alfidh.tvmov.model.data.remote.response.tv.TVDetailResponse
+import com.alfidh.tvmov.model.data.remote.response.tv.TVRemote
+import com.alfidh.tvmov.model.data.remote.response.tv.TVResponse
 import com.alfidh.tvmov.model.network.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
@@ -57,6 +60,25 @@ class RemoteDataSource {
             })
     }
 
+    fun getTopTV(callback: LoadTVCallback) {
+//        EspressoIdlingResource.increment()
+        ApiConfig.getApiService().getTopTVShows(1)
+            .enqueue(object : Callback<TVResponse> {
+                override fun onResponse(
+                    call: Call<TVResponse>,
+                    response: Response<TVResponse>
+                ) {
+                    callback.onAllTVShowsReceived(response.body()?.result)
+//                    EspressoIdlingResource.decrement()
+                }
+
+                override fun onFailure(call: Call<TVResponse>, t: Throwable) {
+//                    EspressoIdlingResource.decrement()
+                }
+
+            })
+    }
+
 
     interface LoadMovieCallback {
         fun onAllMoviesReceived(moviesResponse: List<MovieRemote>?)
@@ -66,11 +88,11 @@ class RemoteDataSource {
         fun onAllDetailMoviesReceived(moviesDetail: MovieDetailResponse?)
     }
 
-//    interface LoadTVCallback {
-//        fun onAllTVShowsReceived(tvResponse: List<TVShowRemote>?)
-//    }
-//
-//    interface LoadDetailTVCallback {
-//        fun onAllDetailTVShowsReceived(tvShowsDetail: TVShowsDetailResponse?)
-//    }
+    interface LoadTVCallback {
+        fun onAllTVShowsReceived(tvResponse: List<TVRemote>?)
+    }
+
+    interface LoadDetailTVCallback {
+        fun onAllDetailTVShowsReceived(tvShowsDetail: TVDetailResponse?)
+    }
 }

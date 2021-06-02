@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.alfidh.tvmov.di.Injection
 import com.alfidh.tvmov.model.repository.TVMovieRepository
 import com.alfidh.tvmov.viewmodel.movies.MovieViewModel
+import com.alfidh.tvmov.viewmodel.tv.TVViewModel
 
 class ViewModelFactory private constructor(private val tvMovieRepository: TVMovieRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -28,9 +29,9 @@ class ViewModelFactory private constructor(private val tvMovieRepository: TVMovi
             modelClass.isAssignableFrom(MovieViewModel::class.java) -> {
                 MovieViewModel(tvMovieRepository) as T
             }
-//            modelClass.isAssignableFrom(DetailFilmViewModel::class.java) -> {
-//                DetailFilmViewModel(filmCatalogueRepository) as T
-//            }
+            modelClass.isAssignableFrom(TVViewModel::class.java) -> {
+                TVViewModel(tvMovieRepository) as T
+            }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }
 

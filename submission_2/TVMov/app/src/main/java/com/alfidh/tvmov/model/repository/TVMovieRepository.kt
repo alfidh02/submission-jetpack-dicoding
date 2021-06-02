@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.alfidh.tvmov.model.data.entity.DetailEntity
 import com.alfidh.tvmov.model.data.entity.MovieEntity
+import com.alfidh.tvmov.model.data.entity.TVEntity
 import com.alfidh.tvmov.model.data.remote.response.movie.MovieDetailResponse
 import com.alfidh.tvmov.model.data.remote.response.movie.MovieRemote
+import com.alfidh.tvmov.model.data.remote.response.tv.TVRemote
 import com.alfidh.tvmov.model.data.remote.source.RemoteDataSource
 import com.alfidh.tvmov.model.data.remote.source.TVMovieDataSource
 
@@ -68,5 +70,29 @@ class TVMovieRepository private constructor(private val remoteDataSource: Remote
             }
         }, movieID)
         return getDetailMovie
+    }
+
+    override fun loadTVShow(): LiveData<List<TVEntity>> {
+        val getTV = MutableLiveData<List<TVEntity>>()
+
+        remoteDataSource.getTopTV(object : RemoteDataSource.LoadTVCallback {
+            override fun onAllTVShowsReceived(tvResponse: List<TVRemote>?) {
+                val listTV = ArrayList<TVEntity>()
+                if (tvResponse != null) {
+                    for (tvShow in tvResponse) {
+                        tvShow.apply {
+                            val tv = TVEntity(id, title, date, pic, rate)
+                            listTV.add(tv)
+                        }
+                    }
+                    getTV.postValue(listTV)
+                }
+            }
+        })
+        return getTV
+    }
+
+    override fun loadDetailTVShow(tvShowID: String): LiveData<DetailEntity> {
+        TODO()
     }
 }

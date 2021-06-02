@@ -3,6 +3,8 @@ package com.alfidh.tvmov.model.network
 import com.alfidh.tvmov.BuildConfig
 import com.alfidh.tvmov.model.data.remote.response.movie.MovieDetailResponse
 import com.alfidh.tvmov.model.data.remote.response.movie.MovieResponse
+import com.alfidh.tvmov.model.data.remote.response.tv.TVDetailResponse
+import com.alfidh.tvmov.model.data.remote.response.tv.TVResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -22,14 +24,14 @@ interface ApiService {
     fun getDetailMovies(
         @Path("movie_id") id: String
     ): Call<MovieDetailResponse>
-//
-//    @GET("tv/popular?api_key=$API_KEY")
-//    fun getTopTVShows(
-//        @Query("page") page: Int
-//    ): Call<TVShowsResponse>
-//
-//    @GET("tv/{tv_id}?api_key=$API_KEY")
-//    fun getDetailTVShows(
-//        @Path("tv_id") id: String
-//    ): Call<TVShowsDetailResponse>
+
+    @GET("tv/top_rated?api_key=$API_KEY")
+    fun getTopTVShows(
+        @Query("page") page: Int
+    ): Call<TVResponse>
+
+    @GET("tv/{tv_id}?api_key=$API_KEY")
+    fun getDetailTVShows(
+        @Path("tv_id") id: String
+    ): Call<TVDetailResponse>
 }

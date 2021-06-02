@@ -30,14 +30,14 @@ class MovieFragment : Fragment(), MovieAdapter.OnItemClickCallback {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
-            true.progressBar()
+            progressBarLoading(true)
 
             val factory = ViewModelFactory.getInstance(requireActivity())
             val viewModel = ViewModelProvider(this, factory)[MovieViewModel::class.java]
             movieAdapter = MovieAdapter()
 
             viewModel.getListMovie().observe(viewLifecycleOwner, { movies ->
-                false.progressBar()
+                progressBarLoading(false)
                 movieAdapter.apply {
                     setMovies(movies)
                     notifyDataSetChanged()
@@ -57,8 +57,8 @@ class MovieFragment : Fragment(), MovieAdapter.OnItemClickCallback {
         }
     }
 
-    private fun Boolean.progressBar() {
-        fragmentMovieBinding.progressBar.visibility = if (this) View.VISIBLE else View.GONE
+    private fun progressBarLoading(value: Boolean) {
+        fragmentMovieBinding.progressBar.visibility = if (value) View.VISIBLE else View.GONE
     }
 
     override fun onItemClicked(id: String) {

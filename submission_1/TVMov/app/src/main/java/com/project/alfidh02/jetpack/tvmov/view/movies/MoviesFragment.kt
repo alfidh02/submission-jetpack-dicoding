@@ -19,7 +19,6 @@ class MoviesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         fragmentMoviesBinding = FragmentMoviesBinding.inflate(layoutInflater, container, false)
         return fragmentMoviesBinding.root
     }

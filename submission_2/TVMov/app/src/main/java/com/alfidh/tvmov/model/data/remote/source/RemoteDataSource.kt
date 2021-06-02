@@ -79,6 +79,25 @@ class RemoteDataSource {
             })
     }
 
+    fun getDetailTV(callback: LoadDetailTVCallback, id: String) {
+//        EspressoIdlingResource.increment()
+        ApiConfig.getApiService().getDetailTVShows(id)
+            .enqueue(object : Callback<TVDetailResponse> {
+                override fun onResponse(
+                    call: Call<TVDetailResponse>,
+                    response: Response<TVDetailResponse>
+                ) {
+                    callback.onAllDetailTVShowsReceived(response.body())
+//                    EspressoIdlingResource.decrement()
+                }
+
+                override fun onFailure(call: Call<TVDetailResponse>, t: Throwable) {
+//                    EspressoIdlingResource.decrement()
+                }
+
+            })
+    }
+
 
     interface LoadMovieCallback {
         fun onAllMoviesReceived(moviesResponse: List<MovieRemote>?)

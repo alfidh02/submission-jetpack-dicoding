@@ -12,6 +12,8 @@ data class MovieDetailResponse (
     val date: String,
     @SerializedName("poster_path")
     val pic: String,
+    @SerializedName("vote_average")
+    val rate: Double,
     @SerializedName("genres")
     val genres: List<GenreResponse>,
     @SerializedName("overview")

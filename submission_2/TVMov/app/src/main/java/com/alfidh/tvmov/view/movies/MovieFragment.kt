@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alfidh.tvmov.databinding.FragmentMovieBinding
+import com.alfidh.tvmov.view.detail.DetailActivity
+import com.alfidh.tvmov.viewmodel.detail.DetailViewModel.Companion.MOVIE
 import com.alfidh.tvmov.viewmodel.factory.ViewModelFactory
 import com.alfidh.tvmov.viewmodel.movies.MovieViewModel
 
@@ -62,10 +64,10 @@ class MovieFragment : Fragment(), MovieAdapter.OnItemClickCallback {
     }
 
     override fun onItemClicked(id: String) {
-//        Intent(context, DetailActivity::class.java).also {
-//            it.putExtra(DetailActivity.EXTRAS_DATA, id)
-//            it.putExtra(DetailActivity.EXTRAS_CHOOSE, MOVIE)
-//            context?.startActivity(it)
-//        }
+        Intent(context, DetailActivity::class.java).also {
+            it.putExtra(DetailActivity.EXTRA_DATA, id)
+            it.putExtra(DetailActivity.EXTRA_CHOICE, MOVIE)
+            context?.startActivity(it)
+        }
     }
 }

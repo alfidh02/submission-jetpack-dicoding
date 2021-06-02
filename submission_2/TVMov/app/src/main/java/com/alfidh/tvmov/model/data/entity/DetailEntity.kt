@@ -5,6 +5,7 @@ data class DetailEntity(
     val title: String,
     val date: String,
     val pic: String,
+    val rate: Double,
     val genres: List<String>,
     val desc: String
 )

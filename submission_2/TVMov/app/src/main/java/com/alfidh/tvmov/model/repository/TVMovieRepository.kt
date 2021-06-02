@@ -7,6 +7,7 @@ import com.alfidh.tvmov.model.data.entity.MovieEntity
 import com.alfidh.tvmov.model.data.entity.TVEntity
 import com.alfidh.tvmov.model.data.remote.response.movie.MovieDetailResponse
 import com.alfidh.tvmov.model.data.remote.response.movie.MovieRemote
+import com.alfidh.tvmov.model.data.remote.response.tv.TVDetailResponse
 import com.alfidh.tvmov.model.data.remote.response.tv.TVRemote
 import com.alfidh.tvmov.model.data.remote.source.RemoteDataSource
 import com.alfidh.tvmov.model.data.remote.source.TVMovieDataSource
@@ -61,6 +62,7 @@ class TVMovieRepository private constructor(private val remoteDataSource: Remote
                         id = id,
                         title = title,
                         date = date,
+                        rate = rate,
                         genres = listGenreDetail,
                         pic = pic,
                         desc = desc
@@ -93,6 +95,31 @@ class TVMovieRepository private constructor(private val remoteDataSource: Remote
     }
 
     override fun loadDetailTVShow(tvShowID: String): LiveData<DetailEntity> {
-        TODO()
+        val getDetailTVShow = MutableLiveData<DetailEntity>()
+
+        remoteDataSource.getDetailTV(object : RemoteDataSource.LoadDetailTVCallback {
+            override fun onAllDetailTVShowsReceived(tvShowsDetail: TVDetailResponse?) {
+                lateinit var detailTV: DetailEntity
+                tvShowsDetail?.apply {
+
+                    val listGenreDetail = ArrayList<String>()
+                    for (genre in genres) {
+                        listGenreDetail.add(genre.name)
+                    }
+
+                    detailTV = DetailEntity(
+                        id = id,
+                        title = title,
+                        date = date,
+                        rate = rate,
+                        genres = listGenreDetail,
+                        pic = pic,
+                        desc = desc
+                    )
+                    getDetailTVShow.postValue(detailTV)
+                }
+            }
+        }, tvShowID)
+        return getDetailTVShow
     }
 }

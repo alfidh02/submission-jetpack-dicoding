@@ -48,9 +48,9 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
                 tvDateMovie.text = movie.date
                 tvRateMovie.text = movie.rate.toString()
 
-//                itemView.setOnClickListener {
-//                    onItemClickCallback.onItemClicked(movie.id.toString())
-//                }
+                itemView.setOnClickListener {
+                    onItemClickCallback.onItemClicked(movie.id.toString())
+                }
             }
         }
     }

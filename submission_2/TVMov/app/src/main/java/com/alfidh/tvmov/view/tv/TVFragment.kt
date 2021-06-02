@@ -1,5 +1,6 @@
 package com.alfidh.tvmov.view.tv
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alfidh.tvmov.databinding.FragmentTvBinding
+import com.alfidh.tvmov.view.detail.DetailActivity
+import com.alfidh.tvmov.viewmodel.detail.DetailViewModel
 import com.alfidh.tvmov.viewmodel.factory.ViewModelFactory
 import com.alfidh.tvmov.viewmodel.tv.TVViewModel
 
@@ -61,6 +64,10 @@ class TVFragment : Fragment(), TVAdapter.OnItemClickCallback {
     }
 
     override fun onItemClicked(id: String) {
-        TODO("Not yet implemented")
+        Intent(context, DetailActivity::class.java).also {
+            it.putExtra(DetailActivity.EXTRA_DATA, id)
+            it.putExtra(DetailActivity.EXTRA_CHOICE, DetailViewModel.TV)
+            context?.startActivity(it)
+        }
     }
 }

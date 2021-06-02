@@ -11,7 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TVMov">
-        <activity android:name=".view.detail.DetailActivity"></activity>
+        <activity android:name=".view.detail.DetailActivity"
+            android:theme="@style/Theme.TVMov.NoActionBar"
+            android:parentActivityName=".view.home.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.home.MainActivity"/>
+        </activity>
         <activity android:name=".view.home.MainActivity" />
         <activity
             android:name=".view.splash.SplashScreenActivity"

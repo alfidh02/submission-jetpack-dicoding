@@ -75,8 +75,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/iv_star"
         app:layout_constraintBottom_toBottomOf="@id/iv_star"
-        tools:text="Genre" />
-
-
+        tools:text="Rate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

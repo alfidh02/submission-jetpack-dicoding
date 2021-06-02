@@ -7,6 +7,7 @@ import com.alfidh.tvmov.model.data.remote.response.tv.TVDetailResponse
 import com.alfidh.tvmov.model.data.remote.response.tv.TVRemote
 import com.alfidh.tvmov.model.data.remote.response.tv.TVResponse
 import com.alfidh.tvmov.model.network.ApiConfig
+import com.alfidh.tvmov.testingutil.EspressoIdlingResource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,7 +24,7 @@ class RemoteDataSource {
     }
 
     fun getTopMovies(callback: LoadMovieCallback) {
-//        EspressoIdlingResource.increment()
+        EspressoIdlingResource.increment()
         ApiConfig.getApiService().getTopMovies(1)
             .enqueue(object : Callback<MovieResponse> {
                 override fun onResponse(
@@ -31,18 +32,18 @@ class RemoteDataSource {
                     response: Response<MovieResponse>
                 ) {
                     callback.onAllMoviesReceived(response.body()?.result)
-//                    EspressoIdlingResource.decrement()
+                    EspressoIdlingResource.decrement()
                 }
 
                 override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-//                    EspressoIdlingResource.decrement()
+                    EspressoIdlingResource.decrement()
                 }
 
             })
     }
 
     fun getDetailMovies(callback: LoadDetailMovieCallback, id: String) {
-//        EspressoIdlingResource.increment()
+        EspressoIdlingResource.increment()
         ApiConfig.getApiService().getDetailMovies(id)
             .enqueue(object : Callback<MovieDetailResponse> {
                 override fun onResponse(
@@ -50,18 +51,18 @@ class RemoteDataSource {
                     response: Response<MovieDetailResponse>
                 ) {
                     callback.onAllDetailMoviesReceived(response.body())
-//                    EspressoIdlingResource.decrement()
+                    EspressoIdlingResource.decrement()
                 }
 
                 override fun onFailure(call: Call<MovieDetailResponse>, t: Throwable) {
-//                    EspressoIdlingResource.decrement()
+                    EspressoIdlingResource.decrement()
                 }
 
             })
     }
 
     fun getTopTV(callback: LoadTVCallback) {
-//        EspressoIdlingResource.increment()
+        EspressoIdlingResource.increment()
         ApiConfig.getApiService().getTopTVShows(1)
             .enqueue(object : Callback<TVResponse> {
                 override fun onResponse(
@@ -69,18 +70,18 @@ class RemoteDataSource {
                     response: Response<TVResponse>
                 ) {
                     callback.onAllTVShowsReceived(response.body()?.result)
-//                    EspressoIdlingResource.decrement()
+                    EspressoIdlingResource.decrement()
                 }
 
                 override fun onFailure(call: Call<TVResponse>, t: Throwable) {
-//                    EspressoIdlingResource.decrement()
+                    EspressoIdlingResource.decrement()
                 }
 
             })
     }
 
     fun getDetailTV(callback: LoadDetailTVCallback, id: String) {
-//        EspressoIdlingResource.increment()
+        EspressoIdlingResource.increment()
         ApiConfig.getApiService().getDetailTVShows(id)
             .enqueue(object : Callback<TVDetailResponse> {
                 override fun onResponse(
@@ -88,11 +89,11 @@ class RemoteDataSource {
                     response: Response<TVDetailResponse>
                 ) {
                     callback.onAllDetailTVShowsReceived(response.body())
-//                    EspressoIdlingResource.decrement()
+                    EspressoIdlingResource.decrement()
                 }
 
                 override fun onFailure(call: Call<TVDetailResponse>, t: Throwable) {
-//                    EspressoIdlingResource.decrement()
+                    EspressoIdlingResource.decrement()
                 }
 
             })

@@ -83,8 +83,6 @@ class MainActivityTest {
 
         Espresso.onView(withId(R.id.tv_rate_detail))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
-        Espresso.onView(withId(R.id.tv_rate_detail))
-            .check(ViewAssertions.matches(withText(dataDummyMovie[0].rate.toString())))
 
         Espresso.onView(withId(R.id.tv_desc))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
@@ -122,8 +120,6 @@ class MainActivityTest {
 
         Espresso.onView(withId(R.id.tv_rate_detail))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
-        Espresso.onView(withId(R.id.tv_rate_detail))
-            .check(ViewAssertions.matches(withText(dataDummyTVShow[0].rate.toString())))
 
         Espresso.onView(withId(R.id.tv_desc))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_splash"
+    android:clipToPadding="false"
+    android:descendantFocusability="blocksDescendants"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/iv_poster_detail"
+        android:layout_width="150dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription"
+        android:src="@android:color/darker_gray"/>
+
+    <TextView
+        android:id="@+id/tv_title_detail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Title"
+        android:textSize="20sp"
+        android:fontFamily="@font/montserratsemibold"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/iv_poster_detail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_genre_detail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="3dp"
+        android:text="Genre"
+        android:fontFamily="@font/montserratregular"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_poster_detail"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_detail" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_poster_detail"
+        app:layout_constraintTop_toBottomOf="@id/tv_genre_detail" />
+
+    <TextView
+        android:id="@+id/tv_title_release"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/release_date"
+        android:textSize="14sp"
+        android:fontFamily="@font/montserratmedium"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_poster_detail"
+        app:layout_constraintTop_toBottomOf="@id/divider" />
+
+    <TextView
+        android:id="@+id/tv_release_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        tools:text="January 16, 2010"
+        android:fontFamily="@font/montserratlight"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_poster_detail"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_release" />
+
+    <ImageView
+        android:id="@+id/iv_star"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:src="@drawable/ic_star"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_release_date"
+        app:layout_constraintStart_toEndOf="@id/iv_poster_detail"
+        android:contentDescription="@string/rating" />
+
+
+    <TextView
+        android:id="@+id/tv_rate_detail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserratlight"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:layout_marginStart="4dp"
+        android:textStyle="italic"
+        app:layout_constraintStart_toEndOf="@+id/iv_star"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_star"
+        app:layout_constraintBottom_toBottomOf="@id/iv_star"
+        android:text="Rate" />
+
+
+    <ToggleButton
+        android:id="@+id/btn_fav"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_favorite"
+        android:textOff=""
+        android:textOn=""
+        android:layout_marginStart="125dp"
+        app:layout_constraintStart_toStartOf="@id/iv_poster_detail"
+        app:layout_constraintBottom_toBottomOf="@id/iv_poster_detail"/>
+
+
+    <TextView
+        android:id="@+id/tv_storyboard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/storyboard"
+        android:fontFamily="@font/montserratmedium"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_poster_detail" />
+
+    <TextView
+        android:id="@+id/tv_desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="12dp"
+        android:lineSpacingExtra="5dp"
+        tools:text="@string/dummy_desc"
+        android:fontFamily="@font/montserratlight"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_storyboard" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

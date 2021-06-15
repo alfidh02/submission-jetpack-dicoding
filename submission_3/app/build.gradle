@@ -9,7 +9,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.alfidh02.tvmov"
+        applicationId "com.submissionalfi3.tvmov"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1

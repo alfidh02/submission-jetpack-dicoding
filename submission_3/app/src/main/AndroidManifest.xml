@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.alfidh02.tvmov">
+    package="com.submissionalfi3.tvmov">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,20 +11,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TVMov">
-        <activity android:name="com.alfidh02.tvmov.view.favorite.FavoriteActivity"
+        <activity android:name="com.submissionalfi3.tvmov.view.favorite.FavoriteActivity"
             android:label="@string/favorite"
             android:theme="@style/Theme.TVMov.Custom"/>
         <activity
-            android:name="com.alfidh02.tvmov.view.detail.DetailActivity"
-            android:parentActivityName="com.alfidh02.tvmov.view.home.MainActivity"
+            android:name="com.submissionalfi3.tvmov.view.detail.DetailActivity"
+            android:parentActivityName="com.submissionalfi3.tvmov.view.home.MainActivity"
             android:theme="@style/Theme.TVMov.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.alfidh02.tvmov.view.home.MainActivity" />
+                android:value="com.submissionalfi3.tvmov.view.home.MainActivity" />
         </activity>
-        <activity android:name="com.alfidh02.tvmov.view.home.MainActivity" />
+        <activity android:name="com.submissionalfi3.tvmov.view.home.MainActivity" />
         <activity
-            android:name="com.alfidh02.tvmov.view.splash.SplashScreenActivity"
+            android:name="com.submissionalfi3.tvmov.view.splash.SplashScreenActivity"
             android:theme="@style/Theme.TVMov.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

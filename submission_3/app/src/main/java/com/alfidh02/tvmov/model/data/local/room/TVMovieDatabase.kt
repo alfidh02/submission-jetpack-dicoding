@@ -1,13 +1,17 @@
-package com.alfidh02.tvmov.model.data.room
+package com.alfidh02.tvmov.model.data.local.room
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.alfidh02.tvmov.model.data.entity.MovieEntity
-import com.alfidh02.tvmov.model.data.entity.TVEntity
+import com.alfidh02.tvmov.model.data.local.entity.MovieEntity
+import com.alfidh02.tvmov.model.data.local.entity.TVEntity
 
-@Database(entities = [MovieEntity::class, TVEntity::class], version = 1, exportSchema = false)
+@Database(
+    entities = [MovieEntity::class, TVEntity::class],
+    version = 1,
+    exportSchema = false
+)
 abstract class TVMovieDatabase : RoomDatabase() {
     abstract fun filmDao(): TVMovieDao
 
@@ -21,8 +25,8 @@ abstract class TVMovieDatabase : RoomDatabase() {
                 Room.databaseBuilder(
                     context.applicationContext,
                     TVMovieDatabase::class.java,
-                    "tvmovie.db"
-                ).fallbackToDestructiveMigration().build().apply { INSTANCE = this }
+                    "TVMovie.db"
+                ).build().apply { INSTANCE = this }
             }
     }
 }

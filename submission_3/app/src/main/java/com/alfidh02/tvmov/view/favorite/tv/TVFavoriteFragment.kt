@@ -34,8 +34,6 @@ class TVFavoriteFragment : Fragment(), TVFavoriteAdapter.OnItemClickCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        itemTouchHelper.attachToRecyclerView(binding.rvTvFav)
-
         if (activity != null) {
 
             progressBarLoading(true)
@@ -45,7 +43,7 @@ class TVFavoriteFragment : Fragment(), TVFavoriteAdapter.OnItemClickCallback {
 
             tvFavAdapter = TVFavoriteAdapter()
 
-            viewModel.getFavListTV().observe(viewLifecycleOwner, {
+            viewModel.getFavoriteTVShow().observe(viewLifecycleOwner, {
                 progressBarLoading(false)
                 with(tvFavAdapter) {
                     submitList(it)
@@ -59,30 +57,6 @@ class TVFavoriteFragment : Fragment(), TVFavoriteAdapter.OnItemClickCallback {
             }
         }
     }
-
-    private val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
-        override fun getMovementFlags(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-        ): Int = makeMovementFlags(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
-
-        override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder,
-        ): Boolean = true
-
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            if (view != null) {
-                val swipePosition = viewHolder.bindingAdapterPosition
-                val tvShowEntity = tvFavAdapter.getSwipedItem(swipePosition)
-                tvShowEntity?.let {
-                    viewModel.setFavListTV(it)
-                }
-            }
-        }
-
-    })
 
     private fun progressBarLoading(value: Boolean) {
         binding.progressBar.visibility = if (value) View.VISIBLE else View.GONE

@@ -1,27 +1,28 @@
-package com.alfidh02.tvmov.model.data.remote.source
+package com.alfidh02.tvmov.model.data.source
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.alfidh02.tvmov.model.data.remote.response.ApiResponse
 import com.alfidh02.tvmov.model.data.remote.response.StatusResponse
-import com.alfidh02.tvmov.util.AppExecutors
-import com.alfidh02.tvmov.vo.Resource
+import com.alfidh02.tvmov.testutil.AppExecutors
+import com.alfidh02.tvmov.testutil.vo.Resource
 
-abstract class NetworkBoundResource<ResultType, RequestType>(private val appExecutors: AppExecutors) {
+abstract class NetworkBoundResource<ResultType, RequestType>(private val executors: AppExecutors) {
+
     private val result = MediatorLiveData<Resource<ResultType>>()
 
     init {
         result.value = Resource.loading(null)
 
         @Suppress("LeakingThis")
-        val databaseSource = loadFromDb()
+        val db = loadFromDb()
 
-        result.addSource(databaseSource) { data ->
-            result.removeSource(databaseSource)
+        result.addSource(db) { data ->
+            result.removeSource(db)
             if (shouldFetch(data)) {
-                fetchFromNetwork(databaseSource)
+                fetchFromNetwork(db)
             } else {
-                result.addSource(databaseSource) { newData ->
+                result.addSource(db) { newData ->
                     result.value = Resource.success(newData)
                 }
             }
@@ -51,15 +52,15 @@ abstract class NetworkBoundResource<ResultType, RequestType>(private val appExec
             result.removeSource(dbSource)
             when (response.status) {
                 StatusResponse.SUCCESS ->
-                    appExecutors.diskIO().execute {
+                    executors.diskIO().execute {
                         saveCallResult(response.body)
-                        appExecutors.mainThread().execute {
+                        executors.mainThread().execute {
                             result.addSource(loadFromDb()) { newData ->
                                 result.value = Resource.success(newData)
                             }
                         }
                     }
-                StatusResponse.EMPTY -> appExecutors.mainThread().execute {
+                StatusResponse.EMPTY -> executors.mainThread().execute {
                     result.addSource(loadFromDb()) { newData ->
                         result.value = Resource.success(newData)
                     }

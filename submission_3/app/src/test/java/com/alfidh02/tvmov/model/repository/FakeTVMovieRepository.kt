@@ -3,19 +3,19 @@ package com.alfidh02.tvmov.model.repository
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.alfidh02.tvmov.model.data.entity.MovieEntity
-import com.alfidh02.tvmov.model.data.entity.TVEntity
+import com.alfidh02.tvmov.model.data.local.LocalDataSource
+import com.alfidh02.tvmov.model.data.local.entity.MovieEntity
+import com.alfidh02.tvmov.model.data.local.entity.TVEntity
+import com.alfidh02.tvmov.model.data.remote.RemoteDataSource
 import com.alfidh02.tvmov.model.data.remote.response.ApiResponse
 import com.alfidh02.tvmov.model.data.remote.response.movie.MovieDetailResponse
 import com.alfidh02.tvmov.model.data.remote.response.movie.MovieRemote
 import com.alfidh02.tvmov.model.data.remote.response.tv.TVDetailResponse
 import com.alfidh02.tvmov.model.data.remote.response.tv.TVRemote
-import com.alfidh02.tvmov.model.data.remote.source.LocalDataSource
-import com.alfidh02.tvmov.model.data.remote.source.NetworkBoundResource
-import com.alfidh02.tvmov.model.data.remote.source.RemoteDataSource
-import com.alfidh02.tvmov.model.data.remote.source.TVMovieDataSource
-import com.alfidh02.tvmov.util.AppExecutors
-import com.alfidh02.tvmov.vo.Resource
+import com.alfidh02.tvmov.model.data.source.NetworkBoundResource
+import com.alfidh02.tvmov.model.data.source.TVMovieDataSource
+import com.alfidh02.tvmov.testutil.AppExecutors
+import com.alfidh02.tvmov.testutil.vo.Resource
 
 class FakeTVMovieRepository constructor(
     private val remoteDataSource: RemoteDataSource,
@@ -39,7 +39,7 @@ class FakeTVMovieRepository constructor(
             }
     }
 
-    override fun loadMovies(): LiveData<Resource<PagedList<MovieEntity>>> {
+    override fun getMovies(): LiveData<Resource<PagedList<MovieEntity>>> {
         return object :
             NetworkBoundResource<PagedList<MovieEntity>, List<MovieRemote>>(appExecutors) {
 
@@ -52,7 +52,7 @@ class FakeTVMovieRepository constructor(
                     .setInitialLoadSizeHint(4)
                     .setPageSize(4)
                     .build()
-                return LivePagedListBuilder(localDataSource.getAllMovie(), conf).build()
+                return LivePagedListBuilder(localDataSource.getMovies(), conf).build()
             }
 
             override fun createCall(): LiveData<ApiResponse<List<MovieRemote>>> =
@@ -63,7 +63,13 @@ class FakeTVMovieRepository constructor(
                 for (dataMovie in data) {
                     dataMovie.apply {
                         val movie = MovieEntity(
-                            id, title, date, image, rate, desc
+                            id,
+                            title,
+                            date,
+                            image,
+                            rate,
+                            "",
+                            false
                         )
                         listMovie.add(movie)
                     }
@@ -73,7 +79,7 @@ class FakeTVMovieRepository constructor(
         }.asLiveData()
     }
 
-    override fun loadDetailMovies(movieID: Int): LiveData<Resource<MovieEntity>> {
+    override fun getDetailMovie(movieID: Int): LiveData<Resource<MovieEntity>> {
         return object : NetworkBoundResource<MovieEntity, MovieDetailResponse>(appExecutors) {
 
             override fun shouldFetch(data: MovieEntity?): Boolean =
@@ -81,7 +87,7 @@ class FakeTVMovieRepository constructor(
 
             override fun loadFromDb(): LiveData<MovieEntity> = localDataSource.getMovieById(movieID)
             override fun createCall(): LiveData<ApiResponse<MovieDetailResponse>> =
-                remoteDataSource.getDetailMovies(movieID.toString())
+                remoteDataSource.getDetailMovies(movieID)
 
             override fun saveCallResult(data: MovieDetailResponse) {
                 with(data) {
@@ -92,15 +98,15 @@ class FakeTVMovieRepository constructor(
                         image = image,
                         rate = rate,
                         desc = desc,
-                        addFav = false
+                        favorite = false
                     )
-                    localDataSource.updateFavMovie(dataDetailMovie, false)
+                    localDataSource.setMovieFav(dataDetailMovie, false)
                 }
             }
         }.asLiveData()
     }
 
-    override fun loadTVShow(): LiveData<Resource<PagedList<TVEntity>>> {
+    override fun getTV(): LiveData<Resource<PagedList<TVEntity>>> {
         return object :
             NetworkBoundResource<PagedList<TVEntity>, List<TVRemote>>(appExecutors) {
 
@@ -113,7 +119,7 @@ class FakeTVMovieRepository constructor(
                     .setInitialLoadSizeHint(4)
                     .setPageSize(4)
                     .build()
-                return LivePagedListBuilder(localDataSource.getAllTV(), conf).build()
+                return LivePagedListBuilder(localDataSource.getTV(), conf).build()
             }
 
             override fun createCall(): LiveData<ApiResponse<List<TVRemote>>> =
@@ -123,13 +129,13 @@ class FakeTVMovieRepository constructor(
                 val listTVShow = ArrayList<TVEntity>()
                 for (dataTVShow in data) {
                     with(dataTVShow) {
-                        val tvShow = com.alfidh02.tvmov.model.data.entity.TVEntity(
+                        val tvShow = TVEntity(
                             id,
                             title,
                             date,
-                            desc,
-                            rate,
                             image,
+                            rate,
+                            "",
                             false
                         )
                         listTVShow.add(tvShow)
@@ -140,7 +146,7 @@ class FakeTVMovieRepository constructor(
         }.asLiveData()
     }
 
-    override fun loadDetailTVShow(tvShowID: Int): LiveData<Resource<TVEntity>> {
+    override fun getDetailTV(tvShowID: Int): LiveData<Resource<TVEntity>> {
         return object : NetworkBoundResource<TVEntity, TVDetailResponse>(appExecutors) {
 
             override fun shouldFetch(data: TVEntity?): Boolean = data == null
@@ -149,7 +155,7 @@ class FakeTVMovieRepository constructor(
                 localDataSource.getTVById(tvShowID)
 
             override fun createCall(): LiveData<ApiResponse<TVDetailResponse>> =
-                remoteDataSource.getDetailTV(tvShowID.toString())
+                remoteDataSource.getDetailTV(tvShowID)
 
             override fun saveCallResult(data: TVDetailResponse) {
                 with(data) {
@@ -160,19 +166,19 @@ class FakeTVMovieRepository constructor(
                         image = image,
                         rate = rate,
                         desc = desc,
-                        addFav = false
+                        favorite = false
                     )
-                    localDataSource.updateFavTV(dataDetailTVShow, false)
+                    localDataSource.setTVFav(dataDetailTVShow, false)
                 }
             }
         }.asLiveData()
     }
 
     override fun setMoviesFav(movie: MovieEntity, state: Boolean) =
-        localDataSource.updateFavMovie(movie, state)
+        localDataSource.setMovieFav(movie, state)
 
-    override fun setTVShowsFav(tv: TVEntity, state: Boolean) =
-        localDataSource.updateFavTV(tv, state)
+    override fun setTVFav(tv: TVEntity, state: Boolean) =
+        localDataSource.setTVFav(tv, state)
 
     override fun getMoviesFav(): LiveData<PagedList<MovieEntity>> {
         val conf = PagedList.Config.Builder()
@@ -181,16 +187,16 @@ class FakeTVMovieRepository constructor(
             .setPageSize(4)
             .build()
 
-        return LivePagedListBuilder(localDataSource.getFavMovies(), conf).build()
+        return LivePagedListBuilder(localDataSource.getMoviesFav(), conf).build()
     }
 
-    override fun getTVShowsFav(): LiveData<PagedList<TVEntity>> {
+    override fun getTVFav(): LiveData<PagedList<TVEntity>> {
         val conf = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
             .setInitialLoadSizeHint(4)
             .setPageSize(4)
             .build()
 
-        return LivePagedListBuilder(localDataSource.getFavTV(), conf).build()
+        return LivePagedListBuilder(localDataSource.getTVFav(), conf).build()
     }
 }

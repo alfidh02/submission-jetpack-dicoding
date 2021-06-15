@@ -33,7 +33,6 @@ class MovieFavoriteFragment : Fragment(), MovieFavoriteAdapter.OnItemClickCallba
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        itemTouchHelper.attachToRecyclerView(binding.rvMoviesFav)
 
         if (activity != null) {
 
@@ -44,7 +43,7 @@ class MovieFavoriteFragment : Fragment(), MovieFavoriteAdapter.OnItemClickCallba
 
             movieFavoriteAdapter = MovieFavoriteAdapter()
 
-            viewModel.getFavListMovie().observe(viewLifecycleOwner, {
+            viewModel.getFavoriteMovie().observe(viewLifecycleOwner, {
                 progressBarLoading(false)
                 with(movieFavoriteAdapter) {
                     submitList(it)
@@ -59,29 +58,6 @@ class MovieFavoriteFragment : Fragment(), MovieFavoriteAdapter.OnItemClickCallba
         }
     }
 
-    private val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
-        override fun getMovementFlags(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-        ): Int = makeMovementFlags(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
-
-        override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder,
-        ): Boolean = true
-
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            if (view != null) {
-                val swipePosition = viewHolder.bindingAdapterPosition
-                val movieEntity = movieFavoriteAdapter.getSwipedItem(swipePosition)
-                movieEntity?.let {
-                    viewModel.setFavListMovie(it)
-                }
-            }
-        }
-
-    })
 
     private fun progressBarLoading(value: Boolean) {
         binding.progressBar.visibility = if (value) View.VISIBLE else View.GONE

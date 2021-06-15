@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.alfidh02.tvmov.R
 import com.alfidh02.tvmov.databinding.ItemTvBinding
-import com.alfidh02.tvmov.model.data.entity.TVEntity
+import com.alfidh02.tvmov.model.data.local.entity.TVEntity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 
 class TVFavoriteAdapter :
-    PagedListAdapter<TVEntity, TVFavoriteAdapter.TVShowViewHolder>(DIFF_CALLBACK) {
+    PagedListAdapter<TVEntity, TVFavoriteAdapter.TVFavViewHolder>(DIFF_CALLBACK) {
 
     private lateinit var onItemClickCallback: OnItemClickCallback
 
@@ -31,7 +31,7 @@ class TVFavoriteAdapter :
 
     fun getSwipedItem(swipedPosition: Int): TVEntity? = getItem(swipedPosition)
 
-    inner class TVShowViewHolder(private val binding: ItemTvBinding) :
+    inner class TVFavViewHolder(private val binding: ItemTvBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(tvShow: TVEntity) {
@@ -56,12 +56,12 @@ class TVFavoriteAdapter :
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TVShowViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TVFavViewHolder {
         val view = ItemTvBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TVShowViewHolder(view)
+        return TVFavViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: TVShowViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TVFavViewHolder, position: Int) {
         val tvShow = getItem(position)
         if (tvShow != null) holder.bind(tvShow)
     }

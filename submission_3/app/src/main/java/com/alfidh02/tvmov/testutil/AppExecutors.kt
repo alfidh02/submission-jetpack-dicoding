@@ -1,4 +1,4 @@
-package com.alfidh02.tvmov.util
+package com.alfidh02.tvmov.testutil
 
 import android.os.Handler
 import android.os.Looper

@@ -4,9 +4,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
-import com.alfidh02.tvmov.model.data.entity.TVEntity
+import com.alfidh02.tvmov.model.data.local.entity.TVEntity
 import com.alfidh02.tvmov.model.repository.TVMovieRepository
-import com.alfidh02.tvmov.vo.Resource
+import com.alfidh02.tvmov.testutil.vo.Resource
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -40,17 +40,19 @@ class TVViewModelTest {
     }
 
     @Test
-    fun getTVShow() {
+    fun `getTVShow should success and equals to expected value`() {
         val dummyTV = Resource.success(tvPagedList)
-        `when`(dummyTV.data?.size).thenReturn(5)
+        `when`(dummyTV.data?.size).thenReturn(2)
+
         val tv = MutableLiveData<Resource<PagedList<TVEntity>>>()
         tv.value = dummyTV
 
-        `when`(tvMovieRepository.loadTVShow()).thenReturn(tv)
+        `when`(tvMovieRepository.getTV()).thenReturn(tv)
         val movieEntity = viewModel.getListTV().value?.data
-        verify(tvMovieRepository).loadTVShow()
+        verify(tvMovieRepository).getTV()
+
         assertNotNull(movieEntity)
-        assertEquals(5, movieEntity?.size)
+        assertEquals(2, movieEntity?.size)
 
         viewModel.getListTV().observeForever(observer)
         verify(observer).onChanged(dummyTV)

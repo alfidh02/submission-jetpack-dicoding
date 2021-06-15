@@ -13,7 +13,7 @@ import com.alfidh02.tvmov.databinding.FragmentTvBinding
 import com.alfidh02.tvmov.view.detail.DetailActivity
 import com.alfidh02.tvmov.viewmodel.factory.ViewModelFactory
 import com.alfidh02.tvmov.viewmodel.tv.TVViewModel
-import com.alfidh02.tvmov.vo.Status
+import com.alfidh02.tvmov.testutil.vo.Status
 
 class TVFragment : Fragment(), TVAdapter.OnItemClickCallback {
 

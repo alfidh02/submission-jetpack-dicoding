@@ -3,18 +3,18 @@ package com.alfidh02.tvmov.viewmodel.detail
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.alfidh02.tvmov.model.data.entity.MovieEntity
-import com.alfidh02.tvmov.model.data.entity.TVEntity
+import com.alfidh02.tvmov.model.data.local.entity.MovieEntity
+import com.alfidh02.tvmov.model.data.local.entity.TVEntity
 import com.alfidh02.tvmov.model.repository.TVMovieRepository
-import com.alfidh02.tvmov.util.DetailDataDummy
-import com.alfidh02.tvmov.vo.Resource
-import com.nhaarman.mockitokotlin2.verify
+import com.alfidh02.tvmov.testutil.DataDummy
+import com.alfidh02.tvmov.testutil.vo.Resource
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -22,11 +22,11 @@ class DetailViewModelTest {
 
     private lateinit var viewModel: DetailViewModel
 
-    private val dummyDetailMovie = DetailDataDummy.generateDetailMovie()
-    private val dummyDetailTVShow = DetailDataDummy.generateDetailTVShows()
+    private val dummyDataDetailMovie = DataDummy.generateDetailMovie()
+    private val dummyDataDetailTV = DataDummy.generateDetailTVShows()
 
-    private val movieID = dummyDetailMovie.id
-    private val tvShowID = dummyDetailTVShow.id
+    private val movieID = dummyDataDetailMovie.id
+    private val tvShowID = dummyDataDetailTV.id
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -46,31 +46,31 @@ class DetailViewModelTest {
     }
 
     @Test
-    fun getDetailMovie() {
+    fun `getDetailMovie should return value`() {
         val movie = MutableLiveData<Resource<MovieEntity>>()
-        movie.value = Resource.success(DetailDataDummy.generateDetailMovie())
+        movie.value = Resource.success(DataDummy.generateDetailMovie())
 
-        Mockito.`when`(tvMovieRepository.loadDetailMovies(movieID)).thenReturn(movie)
+        `when`(tvMovieRepository.getDetailMovie(movieID)).thenReturn(movie)
         viewModel.setDataMovie(movieID).observeForever(movieObserver)
         verify(movieObserver).onChanged(movie.value)
     }
 
     @Test
-    fun getDetailTVShow() {
+    fun `getDetailTVShow should return value`() {
         val tvShow = MutableLiveData<Resource<TVEntity>>()
-        tvShow.value = Resource.success(DetailDataDummy.generateDetailTVShows())
+        tvShow.value = Resource.success(DataDummy.generateDetailTVShows())
 
-        Mockito.`when`(tvMovieRepository.loadDetailTVShow(tvShowID)).thenReturn(tvShow)
+        `when`(tvMovieRepository.getDetailTV(tvShowID)).thenReturn(tvShow)
         viewModel.setDataTV(tvShowID).observeForever(tvShowObserver)
         verify(tvShowObserver).onChanged(tvShow.value)
     }
 
     @Test
-    fun setMovieFav() {
+    fun `setFavoriteMovies should success`() {
         val movies = MutableLiveData<Resource<MovieEntity>>()
-        movies.value = Resource.success(DetailDataDummy.generateDetailMovie())
+        movies.value = Resource.success(DataDummy.generateDetailMovie())
 
-        Mockito.`when`(tvMovieRepository.loadDetailMovies(movieID)).thenReturn(movies)
+        `when`(tvMovieRepository.getDetailMovie(movieID)).thenReturn(movies)
 
         viewModel.setDataMovie(movieID).observeForever(movieObserver)
         viewModel.setMovieFavorite()
@@ -78,14 +78,14 @@ class DetailViewModelTest {
     }
 
     @Test
-    fun setTVShowFav() {
+    fun `setFavoriteTVShows should success`() {
         val tvShow = MutableLiveData<Resource<TVEntity>>()
-        tvShow.value = Resource.success(DetailDataDummy.generateDetailTVShows())
+        tvShow.value = Resource.success(DataDummy.generateDetailTVShows())
 
-        Mockito.`when`(tvMovieRepository.loadDetailTVShow(tvShowID)).thenReturn(tvShow)
+        `when`(tvMovieRepository.getDetailTV(tvShowID)).thenReturn(tvShow)
 
         viewModel.setDataTV(tvShowID).observeForever(tvShowObserver)
         viewModel.setTVFavorite()
-        verify(tvMovieRepository).setTVShowsFav((tvShow.value?.data) as TVEntity, true)
+        verify(tvMovieRepository).setTVFav((tvShow.value?.data) as TVEntity, true)
     }
 }

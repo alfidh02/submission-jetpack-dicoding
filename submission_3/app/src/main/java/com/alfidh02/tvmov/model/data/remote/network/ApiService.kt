@@ -1,4 +1,4 @@
-package com.alfidh02.tvmov.model.network
+package com.alfidh02.tvmov.model.data.remote.network
 
 import com.alfidh02.tvmov.BuildConfig
 import com.alfidh02.tvmov.model.data.remote.response.movie.MovieDetailResponse
@@ -20,18 +20,18 @@ interface ApiService {
         @Query("page") page: Int
     ): Call<MovieResponse>
 
-    @GET("movie/{movie_id}?api_key=$API_KEY")
-    fun getDetailMovies(
-        @Path("movie_id") id: String
-    ): Call<MovieDetailResponse>
-
     @GET("tv/top_rated?api_key=$API_KEY")
     fun getTopTVShows(
         @Query("page") page: Int
     ): Call<TVResponse>
 
+    @GET("movie/{movie_id}?api_key=$API_KEY")
+    fun getDetailMovies(
+        @Path("movie_id") id: Int
+    ): Call<MovieDetailResponse>
+
     @GET("tv/{tv_id}?api_key=$API_KEY")
     fun getDetailTVShows(
-        @Path("tv_id") id: String
+        @Path("tv_id") id: Int
     ): Call<TVDetailResponse>
 }

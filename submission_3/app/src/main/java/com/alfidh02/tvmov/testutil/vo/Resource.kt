@@ -1,4 +1,4 @@
-package com.alfidh02.tvmov.vo
+package com.alfidh02.tvmov.testutil.vo
 
 data class Resource<T>(val status: Status, val data: T?, val message: String?) {
     companion object {

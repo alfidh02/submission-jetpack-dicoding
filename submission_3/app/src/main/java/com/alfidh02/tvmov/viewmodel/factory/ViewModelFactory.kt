@@ -3,7 +3,7 @@ package com.alfidh02.tvmov.viewmodel.factory
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.alfidh02.tvmov.di.Injection
+import com.alfidh02.tvmov.testutil.di.Injection
 import com.alfidh02.tvmov.model.repository.TVMovieRepository
 import com.alfidh02.tvmov.viewmodel.detail.DetailViewModel
 import com.alfidh02.tvmov.viewmodel.favorite.FavoriteViewModel

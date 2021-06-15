@@ -1,4 +1,4 @@
-package com.alfidh02.tvmov.model.network
+package com.alfidh02.tvmov.model.data.remote.network
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.alfidh02.tvmov.R
 import com.alfidh02.tvmov.databinding.ItemMovieBinding
-import com.alfidh02.tvmov.model.data.entity.MovieEntity
+import com.alfidh02.tvmov.model.data.local.entity.MovieEntity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 

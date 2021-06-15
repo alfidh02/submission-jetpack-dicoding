@@ -1,11 +1,11 @@
-package com.alfidh02.tvmov.model.data.entity
+package com.alfidh02.tvmov.model.data.local.entity
 
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "tv_entity")
+@Entity(tableName = "table_tv")
 data class TVEntity (
     @PrimaryKey
     @NonNull
@@ -27,6 +27,6 @@ data class TVEntity (
     @ColumnInfo(name = "desc")
     val desc: String,
 
-    @ColumnInfo(name = "addFav")
-    var addFav: Boolean = false
+    @ColumnInfo(name = "favorite")
+    var favorite: Boolean = false
 )

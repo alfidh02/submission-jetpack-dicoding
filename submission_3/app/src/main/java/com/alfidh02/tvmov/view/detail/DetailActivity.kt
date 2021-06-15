@@ -2,17 +2,16 @@ package com.alfidh02.tvmov.view.detail
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.alfidh02.tvmov.R
 import com.alfidh02.tvmov.databinding.ActivityDetailBinding
 import com.alfidh02.tvmov.databinding.ContentDetailMovieTvBinding
-import com.alfidh02.tvmov.model.data.entity.MovieEntity
-import com.alfidh02.tvmov.model.data.entity.TVEntity
+import com.alfidh02.tvmov.model.data.local.entity.MovieEntity
+import com.alfidh02.tvmov.model.data.local.entity.TVEntity
+import com.alfidh02.tvmov.testutil.vo.Status
 import com.alfidh02.tvmov.viewmodel.detail.DetailViewModel
 import com.alfidh02.tvmov.viewmodel.factory.ViewModelFactory
-import com.alfidh02.tvmov.vo.Status
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
@@ -55,6 +54,22 @@ class DetailActivity : AppCompatActivity() {
         setFavorite()
     }
 
+    private fun setFavorite() {
+        val tvMovieChoose = intent.getStringExtra(EXTRA_CHOICE)
+        if (tvMovieChoose != null) {
+            detailContentBinding.btnFav.setOnClickListener {
+                when (tvMovieChoose) {
+                    "MOVIE" -> {
+                        viewModel.setMovieFavorite()
+                    }
+                    "TV_SHOW" -> {
+                        viewModel.setTVFavorite()
+                    }
+                }
+            }
+        }
+    }
+
     private fun getMovieData(movieID: Int) {
         viewModel.setDataMovie(movieID).observe(this, {
             when (it.status) {
@@ -67,8 +82,6 @@ class DetailActivity : AppCompatActivity() {
                 }
                 Status.ERROR -> {
                     progressBarLoading(false)
-                    Toast.makeText(applicationContext, "Data tidak berhasil dimuat", Toast.LENGTH_LONG)
-                        .show()
                 }
             }
         })
@@ -86,26 +99,24 @@ class DetailActivity : AppCompatActivity() {
                 }
                 Status.ERROR -> {
                     progressBarLoading(false)
-                    Toast.makeText(applicationContext, "Data tidak berhasil dimuat", Toast.LENGTH_LONG)
-                        .show()
                 }
             }
         })
     }
 
-    private fun populateDetailMovie(detail: MovieEntity) {
+    private fun populateDetailMovie(movieDetail: MovieEntity) {
 
-        if (supportActionBar != null) title = detail.title
+        if (supportActionBar != null) title = movieDetail.title
 
         detailContentBinding.apply {
-            tvTitleDetail.text = detail.title
-            tvReleaseDate.text = detail.date
-            tvDesc.text = detail.desc
-            tvRateDetail.text = detail.rate.toString()
-            btnFav.isChecked = detail.addFav
+            tvTitleDetail.text = movieDetail.title
+            tvReleaseDate.text = movieDetail.date
+            tvDesc.text = movieDetail.desc
+            tvRateDetail.text = movieDetail.rate.toString()
+            btnFav.isChecked = movieDetail.favorite
 
             Glide.with(this@DetailActivity)
-                .load("https://image.tmdb.org/t/p/w500" + detail.image)
+                .load("https://image.tmdb.org/t/p/w500" + movieDetail.image)
                 .transform(RoundedCorners(20))
                 .apply(RequestOptions.placeholderOf(R.drawable.ic_loading))
                 .error(R.drawable.ic_error)
@@ -113,39 +124,23 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun populateDetailTV(detail: TVEntity) {
+    private fun populateDetailTV(detailTV: TVEntity) {
 
-        if (supportActionBar != null) title = detail.title
+        if (supportActionBar != null) title = detailTV.title
 
         detailContentBinding.apply {
-            tvTitleDetail.text = detail.title
-            tvReleaseDate.text = detail.date
-            tvDesc.text = detail.desc
-            tvRateDetail.text = detail.rate.toString()
-            btnFav.isChecked = detail.addFav
+            tvTitleDetail.text = detailTV.title
+            tvReleaseDate.text = detailTV.date
+            tvDesc.text = detailTV.desc
+            tvRateDetail.text = detailTV.rate.toString()
+            btnFav.isChecked = detailTV.favorite
 
             Glide.with(this@DetailActivity)
-                .load("https://image.tmdb.org/t/p/w500" + detail.image)
+                .load("https://image.tmdb.org/t/p/w500" + detailTV.image)
                 .transform(RoundedCorners(20))
                 .apply(RequestOptions.placeholderOf(R.drawable.ic_loading))
                 .error(R.drawable.ic_error)
                 .into(ivPosterDetail)
-        }
-    }
-
-    private fun setFavorite() {
-        val tvMovieChoose = intent.getStringExtra(EXTRA_CHOICE)
-        if (tvMovieChoose != null) {
-            detailContentBinding.btnFav.setOnClickListener {
-                when (tvMovieChoose) {
-                    "MOVIE" -> {
-                        viewModel.setMovieFavorite()
-                    }
-                    "TV_SHOW" -> {
-                        viewModel.setTVFavorite()
-                    }
-                }
-            }
         }
     }
 

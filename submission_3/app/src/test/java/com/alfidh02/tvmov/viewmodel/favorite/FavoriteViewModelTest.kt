@@ -4,19 +4,17 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
-import com.alfidh02.tvmov.model.data.entity.MovieEntity
-import com.alfidh02.tvmov.model.data.entity.TVEntity
+import com.alfidh02.tvmov.model.data.local.entity.MovieEntity
+import com.alfidh02.tvmov.model.data.local.entity.TVEntity
 import com.alfidh02.tvmov.model.repository.TVMovieRepository
-import com.alfidh02.tvmov.util.DetailDataDummy
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -46,50 +44,38 @@ class FavoriteViewModelTest {
     }
 
     @Test
-    fun setFavListMovies() {
-        viewModel.setFavListMovie(DetailDataDummy.generateDetailMovie())
-        verify(tvMovieRepository).setMoviesFav(DetailDataDummy.generateDetailMovie(), true)
-        verifyNoMoreInteractions(tvMovieRepository)
-    }
-
-    @Test
-    fun setFavListTVShows() {
-        viewModel.setFavListTV(DetailDataDummy.generateDetailTVShows())
-        verify(tvMovieRepository).setTVShowsFav(DetailDataDummy.generateDetailTVShows(), true)
-        verifyNoMoreInteractions(tvMovieRepository)
-    }
-
-    @Test
-    fun getFavListMovies() {
+    fun `getFavoriteListMovie should return value and equals to expected value`() {
         val dummyMovie = moviePagedList
-        Mockito.`when`(dummyMovie.size).thenReturn(5)
+        `when`(dummyMovie.size).thenReturn(2)
         val movies = MutableLiveData<PagedList<MovieEntity>>()
         movies.value = dummyMovie
 
-        Mockito.`when`(tvMovieRepository.getMoviesFav()).thenReturn(movies)
-        val favMovie = viewModel.getFavListMovie().value
+        `when`(tvMovieRepository.getMoviesFav()).thenReturn(movies)
+        val favMovie = viewModel.getFavoriteMovie().value
         verify(tvMovieRepository).getMoviesFav()
-        assertNotNull(favMovie)
-        assertEquals(5, favMovie?.size)
 
-        viewModel.getFavListMovie().observeForever(movieObserver)
+        assertNotNull(favMovie)
+        assertEquals(2, favMovie?.size)
+
+        viewModel.getFavoriteMovie().observeForever(movieObserver)
         verify(movieObserver).onChanged(dummyMovie)
     }
 
     @Test
-    fun getFavListTVShow() {
+    fun `getFavoriteListTVShow should return value and equals to expected value`() {
         val dummyTVShow = tvShowPagedList
-        Mockito.`when`(dummyTVShow.size).thenReturn(5)
+        `when`(dummyTVShow.size).thenReturn(2)
         val tvShows = MutableLiveData<PagedList<TVEntity>>()
         tvShows.value = dummyTVShow
 
-        Mockito.`when`(tvMovieRepository.getTVShowsFav()).thenReturn(tvShows)
-        val favTVShow = viewModel.getFavListTV().value
-        verify(tvMovieRepository).getTVShowsFav()
-        assertNotNull(favTVShow)
-        assertEquals(5, favTVShow?.size)
+        `when`(tvMovieRepository.getTVFav()).thenReturn(tvShows)
+        val favTVShow = viewModel.getFavoriteTVShow().value
+        verify(tvMovieRepository).getTVFav()
 
-        viewModel.getFavListTV().observeForever(tvShowObserver)
+        assertNotNull(favTVShow)
+        assertEquals(2, favTVShow?.size)
+
+        viewModel.getFavoriteTVShow().observeForever(tvShowObserver)
         verify(tvShowObserver).onChanged(dummyTVShow)
     }
 

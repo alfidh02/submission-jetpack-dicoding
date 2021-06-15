@@ -5,7 +5,7 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -41,7 +41,7 @@ class MainActivityTest {
             )
         )
 
-        onView(withId(R.id.view_pager)).perform(ViewActions.swipeLeft())
+        onView(withId(R.id.view_pager)).perform(swipeLeft())
 
         onView(withId(R.id.rv_tv)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_tv)).perform(
@@ -93,7 +93,7 @@ class MainActivityTest {
             )
         )
         onView(withId(R.id.btn_fav)).perform(click())
-        onView(isRoot()).perform(ViewActions.pressBack())
+        onView(isRoot()).perform(pressBack())
 
         onView(withId(R.id.switch_fav)).perform(click())
 
@@ -111,7 +111,7 @@ class MainActivityTest {
         onView(withId(R.id.tv_rate_detail)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_desc)).check(matches(isDisplayed()))
 
-        onView(isRoot()).perform(ViewActions.pressBack())
+        onView(isRoot()).perform(pressBack())
     }
 
     @Test
@@ -144,6 +144,6 @@ class MainActivityTest {
         onView(withId(R.id.tv_rate_detail)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_desc)).check(matches(isDisplayed()))
 
-        onView(isRoot()).perform(ViewActions.pressBack())
+        onView(isRoot()).perform(pressBack())
     }
 }

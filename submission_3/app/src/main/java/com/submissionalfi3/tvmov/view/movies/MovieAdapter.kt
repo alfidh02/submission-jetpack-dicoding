@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.submissionalfi3.tvmov.R
 import com.submissionalfi3.tvmov.databinding.ItemMovieBinding
-import com.submissionalfi3.tvmov.model.data.local.entity.MovieEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.MovieEntity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
@@ -47,21 +47,19 @@ class MovieAdapter : PagedListAdapter<MovieEntity, MovieAdapter.MovieViewHolder>
                     .load("https://image.tmdb.org/t/p/w500" + movie.image)
                     .apply(RequestOptions.placeholderOf(R.drawable.ic_loading))
                     .error(R.drawable.ic_error)
-                    .into(ivPosterMovieImage)
+                    .into(ivPoster)
 
-                tvTitleMovie.text = movie.title
-                tvDateMovie.text = movie.date
-                tvRateMovie.text = movie.rate.toString()
+                tvTitle.text = movie.title
 
                 itemView.setOnClickListener {
-                    onItemClickCallback.onItemClicked(movie.id)
+                    onItemClickCallback.onItemClicked(movie)
                 }
             }
         }
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(id: Int)
+        fun onItemClicked(id: MovieEntity)
     }
 
 }

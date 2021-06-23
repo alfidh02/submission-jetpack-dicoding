@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.submissionalfi3.tvmov.R
 import com.submissionalfi3.tvmov.databinding.ItemMovieBinding
-import com.submissionalfi3.tvmov.model.data.local.entity.MovieEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.MovieEntity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
@@ -29,8 +29,6 @@ class MovieFavoriteAdapter : PagedListAdapter<MovieEntity, MovieFavoriteAdapter.
         }
     }
 
-    fun getSwipedItem(swipedPosition: Int): MovieEntity? = getItem(swipedPosition)
-
     inner class MovieFavViewHolder(private val binding: ItemMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
             fun bind(movie: MovieEntity) {
@@ -42,14 +40,12 @@ class MovieFavoriteAdapter : PagedListAdapter<MovieEntity, MovieFavoriteAdapter.
                             RequestOptions.placeholderOf(R.drawable.ic_loading)
                                 .error(R.drawable.ic_error)
                         )
-                        .into(ivPosterMovieImage)
+                        .into(ivPoster)
 
-                    tvTitleMovie.text = movie.title
-                    tvDateMovie.text = movie.date
-                    tvRateMovie.text = movie.rate.toString()
+                    tvTitle.text = movie.title
 
                     itemView.setOnClickListener {
-                        onItemClickCallback.onItemClicked(movie.id)
+                        onItemClickCallback.onItemClicked(movie)
                     }
                 }
             }
@@ -71,6 +67,6 @@ class MovieFavoriteAdapter : PagedListAdapter<MovieEntity, MovieFavoriteAdapter.
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(id: Int)
+        fun onItemClicked(id: MovieEntity)
     }
 }

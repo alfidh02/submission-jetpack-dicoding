@@ -2,33 +2,30 @@ package com.submissionalfi3.tvmov.viewmodel.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.submissionalfi3.tvmov.model.data.local.entity.MovieEntity
-import com.submissionalfi3.tvmov.model.data.local.entity.TVEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.DetailEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.MovieEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.TVEntity
 import com.submissionalfi3.tvmov.model.repository.TVMovieRepository
-import com.submissionalfi3.tvmov.testutil.vo.Resource
+import com.submissionalfi3.tvmov.utilities.vo.Resource
 
 class DetailViewModel(private val filmCatalogueRepository: TVMovieRepository) :
     ViewModel() {
 
-    private lateinit var dataDetailMovie: LiveData<Resource<MovieEntity>>
+    private lateinit var dataDetail: LiveData<Resource<DetailEntity>>
     private lateinit var dataDetailTVShow: LiveData<Resource<TVEntity>>
 
-    fun setDataMovie(movieId: Int) : LiveData<Resource<MovieEntity>> {
-        dataDetailMovie = filmCatalogueRepository.getDetailMovie(movieId)
-        return dataDetailMovie
+    fun setDataMovie(movieId: Int): LiveData<Resource<DetailEntity>> {
+        dataDetail = filmCatalogueRepository.getDetailMovie(movieId)
+        return dataDetail
     }
 
-    fun setDataTV(tvShowId: Int) : LiveData<Resource<TVEntity>> {
+    fun setDataTV(tvShowId: Int): LiveData<Resource<TVEntity>> {
         dataDetailTVShow = filmCatalogueRepository.getDetailTV(tvShowId)
         return dataDetailTVShow
     }
 
-    fun setMovieFavorite() {
-        val movie = dataDetailMovie.value
-        if (movie?.data != null) {
-            val newState = !movie.data.favorite
-            filmCatalogueRepository.setMoviesFav(movie.data, newState)
-        }
+    fun setMovieFavorite(movieEntity: MovieEntity, newState: Boolean) {
+        filmCatalogueRepository.setMoviesFav(movieEntity, newState)
     }
 
     fun setTVFavorite() {

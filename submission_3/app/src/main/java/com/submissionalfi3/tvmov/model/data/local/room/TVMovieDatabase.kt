@@ -4,14 +4,18 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.submissionalfi3.tvmov.model.data.local.entity.MovieEntity
-import com.submissionalfi3.tvmov.model.data.local.entity.TVEntity
+import androidx.room.TypeConverters
+import com.submissionalfi3.tvmov.model.data.local.entities.DetailEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.MovieEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.TVEntity
+import com.submissionalfi3.tvmov.utilities.Converters
 
 @Database(
-    entities = [MovieEntity::class, TVEntity::class],
+    entities = [MovieEntity::class, TVEntity::class, DetailEntity::class],
     version = 1,
     exportSchema = false
 )
+@TypeConverters(Converters::class)
 abstract class TVMovieDatabase : RoomDatabase() {
     abstract fun filmDao(): TVMovieDao
 

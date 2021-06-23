@@ -1,4 +1,4 @@
-package com.submissionalfi3.tvmov.testutil
+package com.submissionalfi3.tvmov.utilities
 
 import androidx.paging.PagedList
 import org.mockito.ArgumentMatchers.anyInt

@@ -1,12 +1,15 @@
-package com.submissionalfi3.tvmov.model.data.local.entity
+package com.submissionalfi3.tvmov.model.data.local.entities
 
+import android.os.Parcelable
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
-@Entity(tableName = "table_tv")
-data class TVEntity (
+@Parcelize
+@Entity(tableName = "table_movie")
+data class MovieEntity (
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "id")
@@ -29,4 +32,4 @@ data class TVEntity (
 
     @ColumnInfo(name = "favorite")
     var favorite: Boolean = false
-)
+) : Parcelable

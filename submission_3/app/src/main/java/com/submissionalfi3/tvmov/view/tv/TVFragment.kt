@@ -8,12 +8,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.submissionalfi3.tvmov.databinding.FragmentTvBinding
+import com.submissionalfi3.tvmov.model.data.local.entities.TVEntity
 import com.submissionalfi3.tvmov.view.detail.DetailActivity
 import com.submissionalfi3.tvmov.viewmodel.factory.ViewModelFactory
 import com.submissionalfi3.tvmov.viewmodel.tv.TVViewModel
-import com.submissionalfi3.tvmov.testutil.vo.Status
+import com.submissionalfi3.tvmov.utilities.vo.Status
 
 class TVFragment : Fragment(), TVAdapter.OnItemClickCallback {
 
@@ -52,7 +54,7 @@ class TVFragment : Fragment(), TVAdapter.OnItemClickCallback {
                         }
                         Status.ERROR -> {
                             progressBarLoading(false)
-                            Toast.makeText(context, "Data tidak berhasil dimuat!", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, "Terjadi kesalahan.", Toast.LENGTH_LONG).show()
                         }
                     }
                 }
@@ -63,7 +65,7 @@ class TVFragment : Fragment(), TVAdapter.OnItemClickCallback {
 
     private fun setRecyclerView() {
         fragmentTvBinding.rvTv.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = GridLayoutManager(context, 2)
             setHasFixedSize(true)
             adapter = tvAdapter
 
@@ -74,7 +76,7 @@ class TVFragment : Fragment(), TVAdapter.OnItemClickCallback {
         fragmentTvBinding.progressBar.visibility = if (value) View.VISIBLE else View.GONE
     }
 
-    override fun onItemClicked(id: Int) {
+    override fun onItemClicked(id: TVEntity) {
         Intent(context, DetailActivity::class.java).also {
             it.putExtra(DetailActivity.EXTRA_DATA, id)
             it.putExtra(DetailActivity.EXTRA_CHOICE, "TV_SHOW")

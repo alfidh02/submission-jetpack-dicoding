@@ -8,12 +8,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.submissionalfi3.tvmov.databinding.FragmentMovieBinding
+import com.submissionalfi3.tvmov.model.data.local.entities.MovieEntity
+import com.submissionalfi3.tvmov.utilities.vo.Status
 import com.submissionalfi3.tvmov.view.detail.DetailActivity
 import com.submissionalfi3.tvmov.viewmodel.factory.ViewModelFactory
 import com.submissionalfi3.tvmov.viewmodel.movies.MovieViewModel
-import com.submissionalfi3.tvmov.testutil.vo.Status
 
 class MovieFragment : Fragment(), MovieAdapter.OnItemClickCallback {
 
@@ -52,7 +53,11 @@ class MovieFragment : Fragment(), MovieAdapter.OnItemClickCallback {
                         }
                         Status.ERROR -> {
                             progressBarLoading(false)
-                            Toast.makeText(context, "Data tidak berhasil dimuat!", Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                context,
+                                "Data tidak berhasil dimuat!",
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                     }
                 }
@@ -63,10 +68,9 @@ class MovieFragment : Fragment(), MovieAdapter.OnItemClickCallback {
 
     private fun setRecyclerView() {
         fragmentMovieBinding.rvMovies.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = GridLayoutManager(context, 2)
             setHasFixedSize(true)
             adapter = movieAdapter
-
         }
     }
 
@@ -74,7 +78,7 @@ class MovieFragment : Fragment(), MovieAdapter.OnItemClickCallback {
         fragmentMovieBinding.progressBar.visibility = if (value) View.VISIBLE else View.GONE
     }
 
-    override fun onItemClicked(id: Int) {
+    override fun onItemClicked(id: MovieEntity) {
         Intent(context, DetailActivity::class.java).also {
             it.putExtra(DetailActivity.EXTRA_DATA, id)
             it.putExtra(DetailActivity.EXTRA_CHOICE, "MOVIE")

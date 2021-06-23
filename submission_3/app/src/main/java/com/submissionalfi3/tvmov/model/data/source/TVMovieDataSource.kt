@@ -2,15 +2,16 @@ package com.submissionalfi3.tvmov.model.data.source
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
-import com.submissionalfi3.tvmov.model.data.local.entity.MovieEntity
-import com.submissionalfi3.tvmov.model.data.local.entity.TVEntity
-import com.submissionalfi3.tvmov.testutil.vo.Resource
+import com.submissionalfi3.tvmov.model.data.local.entities.DetailEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.MovieEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.TVEntity
+import com.submissionalfi3.tvmov.utilities.vo.Resource
 
 interface TVMovieDataSource {
 
     fun getMovies(): LiveData<Resource<PagedList<MovieEntity>>>
 
-    fun getDetailMovie(movieID: Int): LiveData<Resource<MovieEntity>>
+    fun getDetailMovie(movieID: Int): LiveData<Resource<DetailEntity>>
 
     fun getTV(): LiveData<Resource<PagedList<TVEntity>>>
 

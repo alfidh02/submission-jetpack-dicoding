@@ -2,7 +2,7 @@ package com.submissionalfi3.tvmov.model.data.remote.response.movie
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieRemote (
+data class MovieRemoteResponse (
 
     @SerializedName("id")
     val id: Int,

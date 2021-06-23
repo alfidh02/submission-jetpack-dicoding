@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.submissionalfi3.tvmov.databinding.FragmentMovieFavoriteBinding
+import com.submissionalfi3.tvmov.model.data.local.entities.MovieEntity
 import com.submissionalfi3.tvmov.view.detail.DetailActivity
 import com.submissionalfi3.tvmov.viewmodel.factory.ViewModelFactory
 import com.submissionalfi3.tvmov.viewmodel.favorite.FavoriteViewModel
@@ -61,7 +62,7 @@ class MovieFavoriteFragment : Fragment(), MovieFavoriteAdapter.OnItemClickCallba
         binding.progressBar.visibility = if (value) View.VISIBLE else View.GONE
     }
 
-    override fun onItemClicked(id: Int) {
+    override fun onItemClicked(id: MovieEntity) {
         Intent(context, DetailActivity::class.java).also {
             it.putExtra(DetailActivity.EXTRA_DATA, id)
             it.putExtra(DetailActivity.EXTRA_CHOICE, "MOVIE")

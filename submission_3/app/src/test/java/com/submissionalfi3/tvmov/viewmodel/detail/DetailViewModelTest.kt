@@ -3,11 +3,11 @@ package com.submissionalfi3.tvmov.viewmodel.detail
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.submissionalfi3.tvmov.model.data.local.entity.MovieEntity
-import com.submissionalfi3.tvmov.model.data.local.entity.TVEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.MovieEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.TVEntity
 import com.submissionalfi3.tvmov.model.repository.TVMovieRepository
-import com.submissionalfi3.tvmov.testutil.DataDummy
-import com.submissionalfi3.tvmov.testutil.vo.Resource
+import com.submissionalfi3.tvmov.utilities.DataDummy
+import com.submissionalfi3.tvmov.utilities.vo.Resource
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.submissionalfi3.tvmov.model.data.remote.response.ApiResponse
 import com.submissionalfi3.tvmov.model.data.remote.response.StatusResponse
-import com.submissionalfi3.tvmov.testutil.AppExecutors
-import com.submissionalfi3.tvmov.testutil.vo.Resource
+import com.submissionalfi3.tvmov.utilities.AppExecutors
+import com.submissionalfi3.tvmov.utilities.vo.Resource
 
 abstract class NetworkBoundResource<ResultType, RequestType>(private val executors: AppExecutors) {
 

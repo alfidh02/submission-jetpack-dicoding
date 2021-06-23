@@ -1,4 +1,4 @@
-package com.submissionalfi3.tvmov.testutil
+package com.submissionalfi3.tvmov.utilities
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer

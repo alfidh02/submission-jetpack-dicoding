@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.submissionalfi3.tvmov.model.data.remote.response.ApiResponse
 import com.submissionalfi3.tvmov.model.data.remote.response.movie.MovieDetailResponse
-import com.submissionalfi3.tvmov.model.data.remote.response.movie.MovieRemote
+import com.submissionalfi3.tvmov.model.data.remote.response.movie.MovieRemoteResponse
 import com.submissionalfi3.tvmov.model.data.remote.response.movie.MovieResponse
 import com.submissionalfi3.tvmov.model.data.remote.response.tv.TVDetailResponse
-import com.submissionalfi3.tvmov.model.data.remote.response.tv.TVRemote
+import com.submissionalfi3.tvmov.model.data.remote.response.tv.TVRemoteResponse
 import com.submissionalfi3.tvmov.model.data.remote.response.tv.TVResponse
 import com.submissionalfi3.tvmov.model.data.remote.network.ApiConfig
-import com.submissionalfi3.tvmov.testutil.EspressoIdlingResource
+import com.submissionalfi3.tvmov.utilities.EspressoIdlingResource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,9 +26,9 @@ class RemoteDataSource {
         }
     }
 
-    fun getTopMovies(): LiveData<ApiResponse<List<MovieRemote>>> {
+    fun getTopMovies(): LiveData<ApiResponse<List<MovieRemoteResponse>>> {
         EspressoIdlingResource.increment()
-        val resultMovie = MutableLiveData<ApiResponse<List<MovieRemote>>>()
+        val resultMovie = MutableLiveData<ApiResponse<List<MovieRemoteResponse>>>()
 
         ApiConfig.getApiService().getTopMovies(1)
             .enqueue(object : Callback<MovieResponse> {
@@ -36,7 +36,7 @@ class RemoteDataSource {
                     call: Call<MovieResponse>,
                     response: Response<MovieResponse>
                 ) {
-                    resultMovie.value = ApiResponse.success(response.body()?.results as List<MovieRemote>)
+                    resultMovie.value = ApiResponse.success(response.body()?.results as List<MovieRemoteResponse>)
                     EspressoIdlingResource.decrement()
                 }
 
@@ -71,9 +71,9 @@ class RemoteDataSource {
     }
 
 
-    fun getTopTV(): LiveData<ApiResponse<List<TVRemote>>> {
+    fun getTopTV(): LiveData<ApiResponse<List<TVRemoteResponse>>> {
         EspressoIdlingResource.increment()
-        val resultTV = MutableLiveData<ApiResponse<List<TVRemote>>>()
+        val resultTV = MutableLiveData<ApiResponse<List<TVRemoteResponse>>>()
 
         ApiConfig.getApiService().getTopTVShows(1)
             .enqueue(object : Callback<TVResponse> {
@@ -82,7 +82,7 @@ class RemoteDataSource {
                     response: Response<TVResponse>
                 ) {
                     resultTV.value =
-                        ApiResponse.success(response.body()?.results as List<TVRemote>)
+                        ApiResponse.success(response.body()?.results as List<TVRemoteResponse>)
                     EspressoIdlingResource.decrement()
                 }
 

@@ -1,6 +1,7 @@
 package com.submissionalfi3.tvmov.model.data.remote.response.movie
 
 import com.google.gson.annotations.SerializedName
+import com.submissionalfi3.tvmov.model.data.remote.response.genre.GenreResponse
 
 data class MovieDetailResponse (
 
@@ -20,5 +21,8 @@ data class MovieDetailResponse (
     val rate: Double,
 
     @SerializedName("overview")
-    val desc: String
+    val desc: String,
+
+    @SerializedName("genres")
+    val genres: List<GenreResponse>
 )

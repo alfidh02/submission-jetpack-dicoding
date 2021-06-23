@@ -2,8 +2,9 @@ package com.submissionalfi3.tvmov.model.data.local
 
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
-import com.submissionalfi3.tvmov.model.data.local.entity.MovieEntity
-import com.submissionalfi3.tvmov.model.data.local.entity.TVEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.DetailEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.MovieEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.TVEntity
 import com.submissionalfi3.tvmov.model.data.local.room.TVMovieDao
 
 class LocalDataSource private constructor(private val tvMovieDao: TVMovieDao) {
@@ -16,7 +17,7 @@ class LocalDataSource private constructor(private val tvMovieDao: TVMovieDao) {
 
     fun getMovies(): DataSource.Factory<Int, MovieEntity> = tvMovieDao.getMovies()
     fun getMoviesFav(): DataSource.Factory<Int, MovieEntity> = tvMovieDao.getMoviesFav()
-    fun getMovieById(id: Int): LiveData<MovieEntity> = tvMovieDao.getMovieById(id)
+    fun getMovieById(id: Int): LiveData<DetailEntity> = tvMovieDao.getMovieById(id)
     fun insertMovie(movies: List<MovieEntity>) = tvMovieDao.insertMovie(movies)
     fun setMovieFav(movies: MovieEntity, newState: Boolean) {
         movies.favorite = newState
@@ -31,4 +32,6 @@ class LocalDataSource private constructor(private val tvMovieDao: TVMovieDao) {
         tv.favorite = newState
         tvMovieDao.updateTV(tv)
     }
+
+    fun insertDetailTVMovie(detail: DetailEntity) = tvMovieDao.insertDetailTVMovie(detail)
 }

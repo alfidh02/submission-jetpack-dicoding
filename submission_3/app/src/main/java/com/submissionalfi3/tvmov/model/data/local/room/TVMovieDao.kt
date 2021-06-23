@@ -3,8 +3,9 @@ package com.submissionalfi3.tvmov.model.data.local.room
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.*
-import com.submissionalfi3.tvmov.model.data.local.entity.MovieEntity
-import com.submissionalfi3.tvmov.model.data.local.entity.TVEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.DetailEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.MovieEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.TVEntity
 
 @Dao
 interface TVMovieDao {
@@ -15,8 +16,8 @@ interface TVMovieDao {
     @Query("SELECT * FROM table_tv")
     fun getTV(): DataSource.Factory<Int, TVEntity>
 
-    @Query("SELECT * FROM table_movie WHERE id = :id")
-    fun getMovieById(id: Int): LiveData<MovieEntity>
+    @Query("SELECT * FROM table_detail WHERE id = :id")
+    fun getMovieById(id: Int): LiveData<DetailEntity>
 
     @Query("SELECT * FROM table_tv WHERE id = :id")
     fun getTVById(id: Int): LiveData<TVEntity>
@@ -38,4 +39,7 @@ interface TVMovieDao {
 
     @Update
     fun updateTV(tv: TVEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertDetailTVMovie(detail: DetailEntity)
 }

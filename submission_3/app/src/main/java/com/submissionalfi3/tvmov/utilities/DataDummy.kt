@@ -1,11 +1,12 @@
-package com.submissionalfi3.tvmov.testutil
+package com.submissionalfi3.tvmov.utilities
 
-import com.submissionalfi3.tvmov.model.data.local.entity.MovieEntity
-import com.submissionalfi3.tvmov.model.data.local.entity.TVEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.MovieEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.TVEntity
+import com.submissionalfi3.tvmov.model.data.remote.response.genre.GenreResponse
 import com.submissionalfi3.tvmov.model.data.remote.response.movie.MovieDetailResponse
-import com.submissionalfi3.tvmov.model.data.remote.response.movie.MovieRemote
+import com.submissionalfi3.tvmov.model.data.remote.response.movie.MovieRemoteResponse
 import com.submissionalfi3.tvmov.model.data.remote.response.tv.TVDetailResponse
-import com.submissionalfi3.tvmov.model.data.remote.response.tv.TVRemote
+import com.submissionalfi3.tvmov.model.data.remote.response.tv.TVRemoteResponse
 
 object DataDummy {
     fun generateMovie(): ArrayList<MovieEntity> {
@@ -66,12 +67,12 @@ object DataDummy {
     }
 
 
-    fun generateRemoteMovies(): ArrayList<MovieRemote> {
+    fun generateRemoteMovies(): ArrayList<MovieRemoteResponse> {
 
-        val remoteMovie = ArrayList<MovieRemote>()
+        val remoteMovie = ArrayList<MovieRemoteResponse>()
 
         remoteMovie.add(
-            MovieRemote(
+            MovieRemoteResponse(
                 id = 19404,
                 title = "Dilwale Dulhania Le Jayenge",
                 date = "1995-10-20",
@@ -82,7 +83,7 @@ object DataDummy {
         )
 
         remoteMovie.add(
-            MovieRemote(
+            MovieRemoteResponse(
                 id = 278,
                 title = "The Shawshank Redemption",
                 date = "1994-09-23",
@@ -95,12 +96,12 @@ object DataDummy {
     }
 
 
-    fun generateRemoteTVShows(): ArrayList<TVRemote> {
+    fun generateRemoteTVShows(): ArrayList<TVRemoteResponse> {
 
-        val tvShowRemote = ArrayList<TVRemote>()
+        val tvShowRemote = ArrayList<TVRemoteResponse>()
 
         tvShowRemote.add(
-            TVRemote(
+            TVRemoteResponse(
                 id = 100,
                 title = "I Am Not an Animal",
                 date = "2004-05-10",
@@ -110,7 +111,7 @@ object DataDummy {
         )
 
         tvShowRemote.add(
-            TVRemote(
+            TVRemoteResponse(
                 id = 88040,
                 title = "Given",
                 date = "2019-07-12",
@@ -154,7 +155,17 @@ object DataDummy {
             date = "2021-05-26",
             image = "/pKAxHs04yxLDQSIf4MNiZoePVWX.jpg",
             rate = 8.8 ,
-            desc = "In 1970s London amidst the punk rock revolution, a young grifter named Estella is determined to make a name for herself with her designs. She befriends a pair of young thieves who appreciate her appetite for mischief, and together they are able to build a life for themselves on the London streets. One day, Estella’s flair for fashion catches the eye of the Baroness von Hellman, a fashion legend who is devastatingly chic and terrifyingly haute. But their relationship sets in motion a course of events and revelations that will cause Estella to embrace her wicked side and become the raucous, fashionable and revenge-bent Cruella."
+            desc = "In 1970s London amidst the punk rock revolution, a young grifter named Estella is determined to make a name for herself with her designs. She befriends a pair of young thieves who appreciate her appetite for mischief, and together they are able to build a life for themselves on the London streets. One day, Estella’s flair for fashion catches the eye of the Baroness von Hellman, a fashion legend who is devastatingly chic and terrifyingly haute. But their relationship sets in motion a course of events and revelations that will cause Estella to embrace her wicked side and become the raucous, fashionable and revenge-bent Cruella.",
+            genres = listOf(
+                GenreResponse(
+                    id = 35,
+                    name = "Comedy"
+                ),
+                GenreResponse(
+                    id = 80,
+                    name = "Crime"
+                )
+            ),
         )
     }
 
@@ -166,7 +177,17 @@ object DataDummy {
             date = "2004-05-10",
             image = "/qG59J1Q7rpBc1dvku4azbzcqo8h.jpg",
             rate = 9.4 ,
-            desc = "I Am Not An Animal is an animated comedy series about the only six talking animals in the world, whose cosseted existence in a vivisection unit is turned upside down when they are liberated by animal rights activists."
+            desc = "I Am Not An Animal is an animated comedy series about the only six talking animals in the world, whose cosseted existence in a vivisection unit is turned upside down when they are liberated by animal rights activists.",
+            genres = listOf(
+                GenreResponse(
+                    id = 35,
+                    name = "Comedy"
+                ),
+                GenreResponse(
+                    id = 80,
+                    name = "Crime"
+                )
+            ),
         )
     }
 }

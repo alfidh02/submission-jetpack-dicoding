@@ -1,4 +1,4 @@
-package com.submissionalfi3.tvmov.testutil.vo
+package com.submissionalfi3.tvmov.utilities.vo
 
 data class Resource<T>(val status: Status, val data: T?, val message: String?) {
     companion object {

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.submissionalfi3.tvmov.R
 import com.submissionalfi3.tvmov.databinding.ItemTvBinding
-import com.submissionalfi3.tvmov.model.data.local.entity.TVEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.TVEntity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
@@ -28,8 +28,6 @@ class TVFavoriteAdapter :
             }
         }
     }
-
-    fun getSwipedItem(swipedPosition: Int): TVEntity? = getItem(swipedPosition)
 
     inner class TVFavViewHolder(private val binding: ItemTvBinding) :
         RecyclerView.ViewHolder(binding.root) {

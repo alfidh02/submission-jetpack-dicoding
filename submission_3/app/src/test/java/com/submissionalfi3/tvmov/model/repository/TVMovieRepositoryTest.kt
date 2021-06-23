@@ -4,11 +4,11 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import com.submissionalfi3.tvmov.model.data.local.LocalDataSource
-import com.submissionalfi3.tvmov.model.data.local.entity.MovieEntity
-import com.submissionalfi3.tvmov.model.data.local.entity.TVEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.MovieEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.TVEntity
 import com.submissionalfi3.tvmov.model.data.remote.RemoteDataSource
-import com.submissionalfi3.tvmov.testutil.*
-import com.submissionalfi3.tvmov.testutil.vo.Resource
+import com.submissionalfi3.tvmov.utilities.*
+import com.submissionalfi3.tvmov.utilities.vo.Resource
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test

@@ -4,9 +4,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
-import com.submissionalfi3.tvmov.model.data.local.entity.MovieEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.MovieEntity
 import com.submissionalfi3.tvmov.model.repository.TVMovieRepository
-import com.submissionalfi3.tvmov.testutil.vo.Resource
+import com.submissionalfi3.tvmov.utilities.vo.Resource
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before

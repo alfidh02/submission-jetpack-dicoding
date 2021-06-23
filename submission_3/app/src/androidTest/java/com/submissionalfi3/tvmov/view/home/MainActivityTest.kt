@@ -9,8 +9,8 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.submissionalfi3.tvmov.R
-import com.submissionalfi3.tvmov.testutil.DataDummy
-import com.submissionalfi3.tvmov.testutil.EspressoIdlingResource
+import com.submissionalfi3.tvmov.utilities.DataDummy
+import com.submissionalfi3.tvmov.utilities.EspressoIdlingResource
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

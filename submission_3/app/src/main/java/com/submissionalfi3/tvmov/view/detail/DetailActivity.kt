@@ -2,19 +2,21 @@ package com.submissionalfi3.tvmov.view.detail
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.submissionalfi3.tvmov.R
 import com.submissionalfi3.tvmov.databinding.ActivityDetailBinding
 import com.submissionalfi3.tvmov.databinding.ContentDetailMovieTvBinding
-import com.submissionalfi3.tvmov.model.data.local.entity.MovieEntity
-import com.submissionalfi3.tvmov.model.data.local.entity.TVEntity
-import com.submissionalfi3.tvmov.testutil.vo.Status
+import com.submissionalfi3.tvmov.model.data.local.entities.MovieEntity
+import com.submissionalfi3.tvmov.model.data.local.entities.TVEntity
+import com.submissionalfi3.tvmov.utilities.vo.Status
 import com.submissionalfi3.tvmov.viewmodel.detail.DetailViewModel
 import com.submissionalfi3.tvmov.viewmodel.factory.ViewModelFactory
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.submissionalfi3.tvmov.model.data.local.entities.DetailEntity
 
 class DetailActivity : AppCompatActivity() {
 
@@ -39,19 +41,26 @@ class DetailActivity : AppCompatActivity() {
         val factory = ViewModelFactory.getInstance(this)
         viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
 
-        val tvMovieId = intent.getIntExtra(EXTRA_DATA, 0)
         val tvMovieChoice = intent.getStringExtra(EXTRA_CHOICE)
-        if (tvMovieId != 0 && tvMovieChoice != null) {
+        if (tvMovieChoice != null) {
             when (tvMovieChoice) {
                 "MOVIE" -> {
-                    getMovieData(tvMovieId)
+                    val movie = intent.getParcelableExtra<MovieEntity>(EXTRA_DATA) as MovieEntity
+                    getMovieData(movie.id)
+                    setFavButtonState(movie.favorite)
                 }
                 "TV_SHOW" -> {
-                    getTVData(tvMovieId)
+                    val tv = intent.getParcelableExtra<TVEntity>(EXTRA_DATA) as TVEntity
+                    getTVData(tv.id)
+                    setFavButtonState(tv.favorite)
                 }
             }
         }
         setFavorite()
+    }
+
+    private fun setFavButtonState(state: Boolean) {
+        detailContentBinding.btnFav.isChecked = state
     }
 
     private fun setFavorite() {
@@ -60,7 +69,20 @@ class DetailActivity : AppCompatActivity() {
             detailContentBinding.btnFav.setOnClickListener {
                 when (tvMovieChoose) {
                     "MOVIE" -> {
-                        viewModel.setMovieFavorite()
+                        val movie =
+                            intent.getParcelableExtra<MovieEntity>(EXTRA_DATA) as MovieEntity
+                        val newState = !movie.favorite
+                        if (newState) {
+                            Toast.makeText(this, "Berhasil ditambahkan ke favorit!", Toast.LENGTH_SHORT)
+                                .show()
+                        } else {
+                            Toast.makeText(
+                                this,
+                                "Dihapus dari favorit.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        viewModel.setMovieFavorite(movie, newState)
                     }
                     "TV_SHOW" -> {
                         viewModel.setTVFavorite()
@@ -104,16 +126,20 @@ class DetailActivity : AppCompatActivity() {
         })
     }
 
-    private fun populateDetailMovie(movieDetail: MovieEntity) {
+    private fun populateDetailMovie(movieDetail: DetailEntity) {
 
         if (supportActionBar != null) title = movieDetail.title
+
+        val genre = movieDetail.genres.toString()
+            .replace("[", "")
+            .replace("]", "")
 
         detailContentBinding.apply {
             tvTitleDetail.text = movieDetail.title
             tvReleaseDate.text = movieDetail.date
             tvDesc.text = movieDetail.desc
+            tvGenreDetail.text = genre
             tvRateDetail.text = movieDetail.rate.toString()
-            btnFav.isChecked = movieDetail.favorite
 
             Glide.with(this@DetailActivity)
                 .load("https://image.tmdb.org/t/p/w500" + movieDetail.image)
@@ -133,7 +159,6 @@ class DetailActivity : AppCompatActivity() {
             tvReleaseDate.text = detailTV.date
             tvDesc.text = detailTV.desc
             tvRateDetail.text = detailTV.rate.toString()
-            btnFav.isChecked = detailTV.favorite
 
             Glide.with(this@DetailActivity)
                 .load("https://image.tmdb.org/t/p/w500" + detailTV.image)

@@ -3,7 +3,7 @@ package com.submissionalfi3.tvmov.viewmodel.factory
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.submissionalfi3.tvmov.testutil.di.Injection
+import com.submissionalfi3.tvmov.utilities.di.Injection
 import com.submissionalfi3.tvmov.model.repository.TVMovieRepository
 import com.submissionalfi3.tvmov.viewmodel.detail.DetailViewModel
 import com.submissionalfi3.tvmov.viewmodel.favorite.FavoriteViewModel

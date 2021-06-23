@@ -1,4 +1,4 @@
-package com.submissionalfi3.tvmov.testutil.vo
+package com.submissionalfi3.tvmov.utilities.vo
 
 enum class Status {
     SUCCESS,

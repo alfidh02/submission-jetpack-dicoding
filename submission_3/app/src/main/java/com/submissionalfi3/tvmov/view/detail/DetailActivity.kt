@@ -5,18 +5,18 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.submissionalfi3.tvmov.R
 import com.submissionalfi3.tvmov.databinding.ActivityDetailBinding
 import com.submissionalfi3.tvmov.databinding.ContentDetailMovieTvBinding
+import com.submissionalfi3.tvmov.model.data.local.entities.DetailEntity
 import com.submissionalfi3.tvmov.model.data.local.entities.MovieEntity
 import com.submissionalfi3.tvmov.model.data.local.entities.TVEntity
 import com.submissionalfi3.tvmov.utilities.vo.Status
 import com.submissionalfi3.tvmov.viewmodel.detail.DetailViewModel
 import com.submissionalfi3.tvmov.viewmodel.factory.ViewModelFactory
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
-import com.submissionalfi3.tvmov.model.data.local.entities.DetailEntity
 
 class DetailActivity : AppCompatActivity() {
 
@@ -72,32 +72,14 @@ class DetailActivity : AppCompatActivity() {
                         val movie =
                             intent.getParcelableExtra<MovieEntity>(EXTRA_DATA) as MovieEntity
                         val newState = !movie.favorite
-                        if (newState) {
-                            Toast.makeText(this, "Berhasil ditambahkan ke favorit!", Toast.LENGTH_SHORT)
-                                .show()
-                        } else {
-                            Toast.makeText(
-                                this,
-                                "Dihapus dari favorit.",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                        toastMessage(newState)
                         viewModel.setMovieFavorite(movie, newState)
                     }
                     "TV_SHOW" -> {
                         val tv =
                             intent.getParcelableExtra<TVEntity>(EXTRA_DATA) as TVEntity
                         val newState = !tv.favorite
-                        if (newState) {
-                            Toast.makeText(this, "Berhasil ditambahkan ke favorit!", Toast.LENGTH_SHORT)
-                                .show()
-                        } else {
-                            Toast.makeText(
-                                this,
-                                "Dihapus dari favorit.",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                        toastMessage(newState)
                         viewModel.setTVFavorite(tv, newState)
                     }
                 }
@@ -106,7 +88,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun getMovieData(movieID: Int) {
-        viewModel.setDataMovie(movieID).observe(this, {
+        viewModel.setDetailMovie(movieID).observe(this, {
             when (it.status) {
                 Status.LOADING -> progressBarLoading(true)
                 Status.SUCCESS -> {
@@ -123,7 +105,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun getTVData(tvShowID: Int) {
-        viewModel.setDataTV(tvShowID).observe(this, {
+        viewModel.setDetailTV(tvShowID).observe(this, {
             when (it.status) {
                 Status.LOADING -> progressBarLoading(true)
                 Status.SUCCESS -> {
@@ -189,5 +171,14 @@ class DetailActivity : AppCompatActivity() {
 
     private fun progressBarLoading(value: Boolean) {
         detailActivityBinding.progressBar.visibility = if (value) View.VISIBLE else View.GONE
+    }
+
+    private fun toastMessage(newState: Boolean) {
+        Toast.makeText(
+            this,
+            if (newState) "Berhasil ditambahkan ke favorit!" else "Dihapus dari favorit.",
+            Toast.LENGTH_SHORT
+        )
+            .show()
     }
 }

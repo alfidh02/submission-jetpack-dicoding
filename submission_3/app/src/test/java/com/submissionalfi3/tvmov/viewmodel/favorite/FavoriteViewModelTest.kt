@@ -44,7 +44,7 @@ class FavoriteViewModelTest {
     }
 
     @Test
-    fun `getFavoriteListMovie should return value and equals to expected value`() {
+    fun `getFavoriteListMovie should return value and size equals to expected value`() {
         val dummyMovie = moviePagedList
         `when`(dummyMovie.size).thenReturn(2)
         val movies = MutableLiveData<PagedList<MovieEntity>>()
@@ -55,14 +55,15 @@ class FavoriteViewModelTest {
         verify(tvMovieRepository).getMoviesFav()
 
         assertNotNull(favMovie)
-        assertEquals(2, favMovie?.size)
+        assertEquals(movies.value, favMovie)
+        assertEquals(movies.value?.size, favMovie?.size)
 
         viewModel.getFavoriteMovie().observeForever(movieObserver)
         verify(movieObserver).onChanged(dummyMovie)
     }
 
     @Test
-    fun `getFavoriteListTVShow should return value and equals to expected value`() {
+    fun `getFavoriteListTVShow should return value and size equals to expected value`() {
         val dummyTVShow = tvShowPagedList
         `when`(dummyTVShow.size).thenReturn(2)
         val tvShows = MutableLiveData<PagedList<TVEntity>>()
@@ -73,7 +74,8 @@ class FavoriteViewModelTest {
         verify(tvMovieRepository).getTVFav()
 
         assertNotNull(favTVShow)
-        assertEquals(2, favTVShow?.size)
+        assertEquals(tvShows.value, favTVShow)
+        assertEquals(tvShows.value?.size, favTVShow?.size)
 
         viewModel.getFavoriteTVShow().observeForever(tvShowObserver)
         verify(tvShowObserver).onChanged(dummyTVShow)

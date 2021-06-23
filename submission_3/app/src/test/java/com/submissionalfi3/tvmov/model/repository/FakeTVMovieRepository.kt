@@ -50,7 +50,7 @@ class FakeTVMovieRepository constructor(
             override fun loadFromDb(): LiveData<PagedList<MovieEntity>> {
                 val conf = PagedList.Config.Builder()
                     .setEnablePlaceholders(false)
-                    .setInitialLoadSizeHint(4)
+                    .setInitialLoadSizeHint(20)
                     .setPageSize(4)
                     .build()
                 return LivePagedListBuilder(localDataSource.getMovies(), conf).build()
@@ -69,8 +69,7 @@ class FakeTVMovieRepository constructor(
                             date,
                             image,
                             rate,
-                            "",
-                            false
+                            desc
                         )
                         listMovie.add(movie)
                     }
@@ -124,7 +123,7 @@ class FakeTVMovieRepository constructor(
             override fun loadFromDb(): LiveData<PagedList<TVEntity>> {
                 val conf = PagedList.Config.Builder()
                     .setEnablePlaceholders(false)
-                    .setInitialLoadSizeHint(4)
+                    .setInitialLoadSizeHint(20)
                     .setPageSize(4)
                     .build()
                 return LivePagedListBuilder(localDataSource.getTV(), conf).build()
@@ -143,8 +142,7 @@ class FakeTVMovieRepository constructor(
                             date,
                             image,
                             rate,
-                            "",
-                            false
+                            desc
                         )
                         listTVShow.add(tvShow)
                     }
@@ -154,12 +152,12 @@ class FakeTVMovieRepository constructor(
         }.asLiveData()
     }
 
-    override fun getDetailTV(tvShowID: Int): LiveData<Resource<TVEntity>> {
-        return object : NetworkBoundResource<TVEntity, TVDetailResponse>(appExecutors) {
+    override fun getDetailTV(tvShowID: Int): LiveData<Resource<DetailEntity>> {
+        return object : NetworkBoundResource<DetailEntity, TVDetailResponse>(appExecutors) {
 
-            override fun shouldFetch(data: TVEntity?): Boolean = data == null
+            override fun shouldFetch(data: DetailEntity?): Boolean = data == null
 
-            override fun loadFromDb(): LiveData<TVEntity> =
+            override fun loadFromDb(): LiveData<DetailEntity> =
                 localDataSource.getTVById(tvShowID)
 
             override fun createCall(): LiveData<ApiResponse<TVDetailResponse>> =
@@ -167,16 +165,20 @@ class FakeTVMovieRepository constructor(
 
             override fun saveCallResult(data: TVDetailResponse) {
                 with(data) {
-                    val dataDetailTVShow = TVEntity(
+                    val listGenreDetail = ArrayList<String>()
+                    for (genre in genres) {
+                        listGenreDetail.add(genre.name)
+                    }
+                    val dataDetailTVShow = DetailEntity(
                         id = id,
                         title = title,
                         date = date,
                         image = image,
                         rate = rate,
                         desc = desc,
-                        favorite = false
+                        genres = listGenreDetail
                     )
-                    localDataSource.setTVFav(dataDetailTVShow, false)
+                    localDataSource.insertDetailTVMovie(dataDetailTVShow)
                 }
             }
         }.asLiveData()

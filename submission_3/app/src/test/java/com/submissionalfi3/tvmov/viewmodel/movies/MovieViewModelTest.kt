@@ -40,7 +40,7 @@ class MovieViewModelTest {
     }
 
     @Test
-    fun `getMovie should success and equals to expected value`() {
+    fun `getMovie should success and size equals to expected value`() {
         val dummyMovie = Resource.success(moviePagedList)
         `when`(dummyMovie.data?.size).thenReturn(2)
 
@@ -48,11 +48,12 @@ class MovieViewModelTest {
         movies.value = dummyMovie
 
         `when`(tvMovieRepository.getMovies()).thenReturn(movies)
-        val movieEntity = viewModel.getListMovie().value?.data
+        val movieEntity = viewModel.getListMovie().value
         verify(tvMovieRepository).getMovies()
 
         assertNotNull(movieEntity)
-        assertEquals(2, movieEntity?.size)
+        assertEquals(movies.value?.data, movieEntity?.data)
+        assertEquals(movies.value?.data?.size, movieEntity?.data?.size)
 
         viewModel.getListMovie().observeForever(observer)
         verify(observer).onChanged(dummyMovie)

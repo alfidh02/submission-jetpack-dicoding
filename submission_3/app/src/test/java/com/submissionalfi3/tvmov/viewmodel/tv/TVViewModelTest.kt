@@ -40,7 +40,7 @@ class TVViewModelTest {
     }
 
     @Test
-    fun `getTVShow should success and equals to expected value`() {
+    fun `getTVShow should success and size equals to expected value`() {
         val dummyTV = Resource.success(tvPagedList)
         `when`(dummyTV.data?.size).thenReturn(2)
 
@@ -48,11 +48,12 @@ class TVViewModelTest {
         tv.value = dummyTV
 
         `when`(tvMovieRepository.getTV()).thenReturn(tv)
-        val movieEntity = viewModel.getListTV().value?.data
+        val movieEntity = viewModel.getListTV().value
         verify(tvMovieRepository).getTV()
 
         assertNotNull(movieEntity)
-        assertEquals(2, movieEntity?.size)
+        assertEquals(tv.value?.data, movieEntity?.data)
+        assertEquals(tv.value?.data?.size, movieEntity?.data?.size)
 
         viewModel.getListTV().observeForever(observer)
         verify(observer).onChanged(dummyTV)

@@ -40,9 +40,11 @@ class MovieFavoriteAdapter : PagedListAdapter<MovieEntity, MovieFavoriteAdapter.
                             RequestOptions.placeholderOf(R.drawable.ic_loading)
                                 .error(R.drawable.ic_error)
                         )
-                        .into(ivPoster)
+                        .into(ivPosterImage)
 
-                    tvTitle.text = movie.title
+                    tvTitleTv.text = movie.title
+                    tvDateTv.text = movie.date
+                    tvRateTv.text = movie.rate.toString()
 
                     itemView.setOnClickListener {
                         onItemClickCallback.onItemClicked(movie)

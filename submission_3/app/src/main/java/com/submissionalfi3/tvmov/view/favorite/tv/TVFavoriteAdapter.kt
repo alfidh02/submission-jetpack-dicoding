@@ -48,7 +48,7 @@ class TVFavoriteAdapter :
                 tvRateTv.text = tvShow.rate.toString()
 
                 itemView.setOnClickListener {
-                    onItemClickCallback.onItemClicked(tvShow.id)
+                    onItemClickCallback.onItemClicked(tvShow)
                 }
             }
         }
@@ -69,6 +69,6 @@ class TVFavoriteAdapter :
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(id: Int)
+        fun onItemClicked(id: TVEntity)
     }
 }

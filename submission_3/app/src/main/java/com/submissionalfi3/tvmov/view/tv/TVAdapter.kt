@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.submissionalfi3.tvmov.R
-import com.submissionalfi3.tvmov.databinding.ItemMovieBinding
-import com.submissionalfi3.tvmov.model.data.local.entities.TVEntity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.submissionalfi3.tvmov.R
+import com.submissionalfi3.tvmov.databinding.ItemMovieTvBinding
+import com.submissionalfi3.tvmov.model.data.local.entities.TVEntity
 
 class TVAdapter : PagedListAdapter<TVEntity, TVAdapter.TVViewHolder>(DIFF_CALLBACK) {
 
@@ -30,7 +30,7 @@ class TVAdapter : PagedListAdapter<TVEntity, TVAdapter.TVViewHolder>(DIFF_CALLBA
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TVViewHolder {
-        val view = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val view = ItemMovieTvBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TVViewHolder(view)
     }
 
@@ -39,7 +39,7 @@ class TVAdapter : PagedListAdapter<TVEntity, TVAdapter.TVViewHolder>(DIFF_CALLBA
         if (tvShow != null) holder.bind(tvShow)
     }
 
-    inner class TVViewHolder(private val binding: ItemMovieBinding) :
+    inner class TVViewHolder(private val binding: ItemMovieTvBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(tv: TVEntity) {
             binding.apply {

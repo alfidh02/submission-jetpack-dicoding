@@ -3,17 +3,17 @@ package com.submissionalfi3.tvmov.model.repository
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.submissionalfi3.tvmov.model.data.local.LocalDataSource
+import com.submissionalfi3.tvmov.model.data.local.entities.DetailEntity
 import com.submissionalfi3.tvmov.model.data.local.entities.MovieEntity
 import com.submissionalfi3.tvmov.model.data.local.entities.TVEntity
+import com.submissionalfi3.tvmov.model.data.remote.RemoteDataSource
 import com.submissionalfi3.tvmov.model.data.remote.response.ApiResponse
 import com.submissionalfi3.tvmov.model.data.remote.response.movie.MovieDetailResponse
 import com.submissionalfi3.tvmov.model.data.remote.response.movie.MovieRemoteResponse
 import com.submissionalfi3.tvmov.model.data.remote.response.tv.TVDetailResponse
 import com.submissionalfi3.tvmov.model.data.remote.response.tv.TVRemoteResponse
-import com.submissionalfi3.tvmov.model.data.local.LocalDataSource
-import com.submissionalfi3.tvmov.model.data.local.entities.DetailEntity
 import com.submissionalfi3.tvmov.model.data.source.NetworkBoundResource
-import com.submissionalfi3.tvmov.model.data.remote.RemoteDataSource
 import com.submissionalfi3.tvmov.model.data.source.TVMovieDataSource
 import com.submissionalfi3.tvmov.utilities.AppExecutors
 import com.submissionalfi3.tvmov.utilities.vo.Resource
@@ -47,7 +47,7 @@ class TVMovieRepository private constructor(
             override fun loadFromDb(): LiveData<PagedList<MovieEntity>> {
                 val config = PagedList.Config.Builder()
                     .setEnablePlaceholders(false)
-                    .setInitialLoadSizeHint(4)
+                    .setInitialLoadSizeHint(20)
                     .setPageSize(4)
                     .build()
                 return LivePagedListBuilder(localDataSource.getMovies(), config).build()
@@ -69,8 +69,7 @@ class TVMovieRepository private constructor(
                             date,
                             image,
                             rate,
-                            desc,
-                            false
+                            desc
                         )
                         movieList.add(movie)
                     }
@@ -83,7 +82,8 @@ class TVMovieRepository private constructor(
     override fun getDetailMovie(movieID: Int): LiveData<Resource<DetailEntity>> {
         return object : NetworkBoundResource<DetailEntity, MovieDetailResponse>(appExecutors) {
 
-            override fun loadFromDb(): LiveData<DetailEntity> = localDataSource.getMovieById(movieID)
+            override fun loadFromDb(): LiveData<DetailEntity> =
+                localDataSource.getMovieById(movieID)
 
             override fun createCall(): LiveData<ApiResponse<MovieDetailResponse>> =
                 remoteDataSource.getDetailMovies(movieID)
@@ -123,7 +123,7 @@ class TVMovieRepository private constructor(
             override fun loadFromDb(): LiveData<PagedList<TVEntity>> {
                 val config = PagedList.Config.Builder()
                     .setEnablePlaceholders(false)
-                    .setInitialLoadSizeHint(4)
+                    .setInitialLoadSizeHint(20)
                     .setPageSize(4)
                     .build()
                 return LivePagedListBuilder(localDataSource.getTV(), config).build()
@@ -142,8 +142,8 @@ class TVMovieRepository private constructor(
                             date,
                             image,
                             rate,
-                            desc,
-                            false)
+                            desc
+                        )
                         listTVShow.add(tvShow)
                     }
                 }
@@ -152,29 +152,33 @@ class TVMovieRepository private constructor(
         }.asLiveData()
     }
 
-    override fun getDetailTV(tvShowID: Int): LiveData<Resource<TVEntity>> {
-        return object : NetworkBoundResource<TVEntity, TVDetailResponse>(appExecutors) {
+    override fun getDetailTV(tvShowID: Int): LiveData<Resource<DetailEntity>> {
+        return object : NetworkBoundResource<DetailEntity, TVDetailResponse>(appExecutors) {
 
-            override fun loadFromDb(): LiveData<TVEntity> =
+            override fun loadFromDb(): LiveData<DetailEntity> =
                 localDataSource.getTVById(tvShowID)
 
             override fun createCall(): LiveData<ApiResponse<TVDetailResponse>> =
                 remoteDataSource.getDetailTV(tvShowID)
 
-            override fun shouldFetch(data: TVEntity?): Boolean = data == null
+            override fun shouldFetch(data: DetailEntity?): Boolean = data == null
 
             override fun saveCallResult(data: TVDetailResponse) {
                 with(data) {
-                    val dataDetailTVShow = TVEntity(
+                    val listGenreDetail = ArrayList<String>()
+                    for (genre in genres) {
+                        listGenreDetail.add(genre.name)
+                    }
+                    val dataDetailTVShow = DetailEntity(
                         id = id,
                         title = title,
                         date = date,
                         image = image,
                         rate = rate,
                         desc = desc,
-                        favorite = false
+                        genres = listGenreDetail
                     )
-                    localDataSource.setTVFav(dataDetailTVShow, false)
+                    localDataSource.insertDetailTVMovie(dataDetailTVShow)
                 }
             }
         }.asLiveData()

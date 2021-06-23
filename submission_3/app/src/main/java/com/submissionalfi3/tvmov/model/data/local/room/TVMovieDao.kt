@@ -19,8 +19,8 @@ interface TVMovieDao {
     @Query("SELECT * FROM table_detail WHERE id = :id")
     fun getMovieById(id: Int): LiveData<DetailEntity>
 
-    @Query("SELECT * FROM table_tv WHERE id = :id")
-    fun getTVById(id: Int): LiveData<TVEntity>
+    @Query("SELECT * FROM table_detail WHERE id = :id")
+    fun getTVById(id: Int): LiveData<DetailEntity>
 
     @Query("SELECT * FROM table_movie WHERE favorite = 1")
     fun getMoviesFav(): DataSource.Factory<Int, MovieEntity>

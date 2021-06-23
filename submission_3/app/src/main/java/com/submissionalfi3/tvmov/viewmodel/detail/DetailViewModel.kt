@@ -19,20 +19,16 @@ class DetailViewModel(private val filmCatalogueRepository: TVMovieRepository) :
         return dataDetail
     }
 
-    fun setDataTV(tvShowId: Int): LiveData<Resource<TVEntity>> {
-        dataDetailTVShow = filmCatalogueRepository.getDetailTV(tvShowId)
-        return dataDetailTVShow
+    fun setDataTV(tvShowId: Int): LiveData<Resource<DetailEntity>> {
+        dataDetail = filmCatalogueRepository.getDetailTV(tvShowId)
+        return dataDetail
     }
 
     fun setMovieFavorite(movieEntity: MovieEntity, newState: Boolean) {
         filmCatalogueRepository.setMoviesFav(movieEntity, newState)
     }
 
-    fun setTVFavorite() {
-        val tvShow = dataDetailTVShow.value
-        if (tvShow?.data != null) {
-            val newState = !tvShow.data.favorite
-            filmCatalogueRepository.setTVFav(tvShow.data, newState)
-        }
+    fun setTVFavorite(tvEntity: TVEntity, newState: Boolean) {
+        filmCatalogueRepository.setTVFav(tvEntity, newState)
     }
 }

@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.submissionalfi3.tvmov.R
-import com.submissionalfi3.tvmov.databinding.ItemMovieBinding
-import com.submissionalfi3.tvmov.model.data.local.entities.MovieEntity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.submissionalfi3.tvmov.R
+import com.submissionalfi3.tvmov.databinding.ItemMovieTvBinding
+import com.submissionalfi3.tvmov.model.data.local.entities.MovieEntity
 
 class MovieAdapter : PagedListAdapter<MovieEntity, MovieAdapter.MovieViewHolder>(DIFF_CALLBACK) {
 
@@ -30,7 +30,7 @@ class MovieAdapter : PagedListAdapter<MovieEntity, MovieAdapter.MovieViewHolder>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val view = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val view = ItemMovieTvBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MovieViewHolder(view)
     }
 
@@ -39,7 +39,7 @@ class MovieAdapter : PagedListAdapter<MovieEntity, MovieAdapter.MovieViewHolder>
         if (movies != null) holder.bind(movies)
     }
 
-    inner class MovieViewHolder(private val binding: ItemMovieBinding) :
+    inner class MovieViewHolder(private val binding: ItemMovieTvBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: MovieEntity) {
             binding.apply {

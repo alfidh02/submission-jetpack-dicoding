@@ -15,7 +15,7 @@ interface TVMovieDataSource {
 
     fun getTV(): LiveData<Resource<PagedList<TVEntity>>>
 
-    fun getDetailTV(tvShowID: Int): LiveData<Resource<TVEntity>>
+    fun getDetailTV(tvShowID: Int): LiveData<Resource<DetailEntity>>
 
     fun setMoviesFav(movie: MovieEntity, state: Boolean)
 

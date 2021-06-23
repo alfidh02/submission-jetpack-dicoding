@@ -85,7 +85,20 @@ class DetailActivity : AppCompatActivity() {
                         viewModel.setMovieFavorite(movie, newState)
                     }
                     "TV_SHOW" -> {
-                        viewModel.setTVFavorite()
+                        val tv =
+                            intent.getParcelableExtra<TVEntity>(EXTRA_DATA) as TVEntity
+                        val newState = !tv.favorite
+                        if (newState) {
+                            Toast.makeText(this, "Berhasil ditambahkan ke favorit!", Toast.LENGTH_SHORT)
+                                .show()
+                        } else {
+                            Toast.makeText(
+                                this,
+                                "Dihapus dari favorit.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        viewModel.setTVFavorite(tv, newState)
                     }
                 }
             }
@@ -150,14 +163,19 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun populateDetailTV(detailTV: TVEntity) {
+    private fun populateDetailTV(detailTV: DetailEntity) {
 
         if (supportActionBar != null) title = detailTV.title
+
+        val genre = detailTV.genres.toString()
+            .replace("[", "")
+            .replace("]", "")
 
         detailContentBinding.apply {
             tvTitleDetail.text = detailTV.title
             tvReleaseDate.text = detailTV.date
             tvDesc.text = detailTV.desc
+            tvGenreDetail.text = genre
             tvRateDetail.text = detailTV.rate.toString()
 
             Glide.with(this@DetailActivity)
